@@ -1,5 +1,6 @@
 /.editorconfig
 /.eslintrc.json
+/.github
 /.prettierrc.json
 /data
 /node_modules
