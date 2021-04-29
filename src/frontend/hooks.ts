@@ -13,7 +13,7 @@ type UseAllItemsState = {
   error: boolean;
 };
 
-export const useAllItems = () => {
+export const useAllItems = (): UseAllItemsState => {
   const { data, error } = useSWR('items', () =>
     client.get<Record<string, Item>>('/').then((response) => response.data)
   );

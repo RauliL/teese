@@ -13,7 +13,7 @@ export const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const useErrorMessage = <T extends {}>(
+export const useErrorMessage = <T>(
   meta: FieldMetaProps<T>
 ): [boolean, string | undefined] => {
   const showError = meta.touched && meta.error;
