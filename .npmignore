@@ -1,0 +1,10 @@
+/.editorconfig
+/.eslintrc.json
+/.prettierrc.json
+/data
+/node_modules
+/src
+/tsconfig.*.json
+/webpack.config.js
+*.log
+*.tgz

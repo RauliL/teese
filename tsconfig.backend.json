@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "target": "ES5"
+  },
+  "include": [
+    "./src/backend/**/*.ts",
+    "./src/common/**/*.ts",
+  ]
+}

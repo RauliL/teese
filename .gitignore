@@ -1,0 +1,7 @@
+/.vscode
+/data
+/lib
+/node_modules
+/public/static
+*.log
+*.tgz

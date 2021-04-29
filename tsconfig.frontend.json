@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "lib": ["DOM", "ESNext"],
+    "jsx": "react",
+    "strict": true,
+    "target": "ES5"
+  },
+  "include": [
+    "./src/common/**/*.ts",
+    "./src/frontend/**/*.ts",
+  ]
+}
