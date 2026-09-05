@@ -1,5 +1,6 @@
 import { defineMessages, type MessageDescriptor } from "react-intl";
 import { ItemStatus } from "../../types.js";
+import { fiMessages } from "./locales/fi.js";
 
 const rawMessages = defineMessages({
   "app.title": { defaultMessage: "Teese" },
@@ -144,4 +145,14 @@ export function getDefaultMessages(): Record<string, string> {
       descriptor.defaultMessage ?? id,
     ]),
   );
+}
+
+export function getMessagesForLocale(locale: string): Record<string, string> {
+  const defaults = getDefaultMessages();
+
+  if (locale === "fi") {
+    return { ...defaults, ...fiMessages };
+  }
+
+  return defaults;
 }
