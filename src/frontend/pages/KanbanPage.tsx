@@ -70,9 +70,6 @@ export function KanbanPage() {
 
   return (
     <AppLayout>
-      <Typography component="h1" variant="h4" gutterBottom>
-        Boards
-      </Typography>
       {error ? (
         <Alert severity="error" sx={{ mb: 3 }}>
           {error}
