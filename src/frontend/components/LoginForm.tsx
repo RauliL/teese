@@ -1,3 +1,8 @@
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import React, { FormEvent, useState } from "react";
 import { useAuth } from "../context/AuthContext.js";
 
@@ -22,37 +27,47 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Sign in</h1>
-      <p>
-        <label htmlFor="username">Username</label>
-        <br />
-        <input
-          id="username"
-          name="username"
-          autoComplete="username"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-          required
-        />
-      </p>
-      <p>
-        <label htmlFor="password">Password</label>
-        <br />
-        <input
-          id="password"
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          required
-        />
-      </p>
-      {error ? <p role="alert">{error}</p> : null}
-      <button type="submit" disabled={submitting}>
+    <Box component="form" onSubmit={handleSubmit} noValidate>
+      <Typography component="h1" variant="h5" gutterBottom>
+        Sign in
+      </Typography>
+      <TextField
+        id="username"
+        name="username"
+        label="Username"
+        autoComplete="username"
+        value={username}
+        onChange={(event) => setUsername(event.target.value)}
+        margin="normal"
+        required
+        fullWidth
+      />
+      <TextField
+        id="password"
+        name="password"
+        label="Password"
+        type="password"
+        autoComplete="current-password"
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+        margin="normal"
+        required
+        fullWidth
+      />
+      {error ? (
+        <Alert severity="error" sx={{ mt: 2 }}>
+          {error}
+        </Alert>
+      ) : null}
+      <Button
+        type="submit"
+        variant="contained"
+        fullWidth
+        disabled={submitting}
+        sx={{ mt: 3 }}
+      >
         {submitting ? "Signing in..." : "Sign in"}
-      </button>
-    </form>
+      </Button>
+    </Box>
   );
 }

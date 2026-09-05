@@ -31,13 +31,18 @@
     "prepack": "env NODE_ENV=production $npm_execpath run build"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@fvilers/normalize-port": "^2.0.0",
+    "@mui/icons-material": "^9.4.0",
+    "@mui/material": "^9.4.0",
     "@varasto/cache-storage": "^4.0.0",
     "@varasto/fs-storage": "^4.0.0",
     "bcryptjs": "^3.0.3",
     "express": "^5.2.1",
     "jose": "^6.2.12",
-    "morgan": "^1.12.0"
+    "morgan": "^1.12.0",
+    "react-router-dom": "^7.18.3"
   },
   "devDependencies": {
     "@formatjs/ts-transformer": "^4.4.19",
