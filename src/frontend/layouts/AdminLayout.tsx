@@ -71,6 +71,14 @@ export function AdminLayout() {
             </Typography>
             <Button
               color="inherit"
+              component={RouterLink}
+              to="/"
+              startIcon={<ViewModuleIcon />}
+            >
+              Boards
+            </Button>
+            <Button
+              color="inherit"
               startIcon={<LogoutIcon />}
               onClick={handleLogout}
             >
