@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { isValidSlug } from "is-valid-slug";
-import type { CreateUserRequest, PublicUser, User } from "../types.js";
+import type { Board, CreateUserRequest, PublicUser, User } from "../types.js";
+import { BOARDS_NAMESPACE } from "./boards.js";
 import { storage, USERS_NAMESPACE } from "./storage.js";
 
 const BCRYPT_ROUNDS = 12;
@@ -68,6 +69,48 @@ export async function verifyUserPassword(
   return bcrypt.compare(password, user.passwordHash);
 }
 
+async function countAdminUsers(): Promise<number> {
+  let count = 0;
+
+  for await (const [, user] of storage.entries<User>(USERS_NAMESPACE)) {
+    if (user.isAdmin) {
+      count++;
+    }
+  }
+
+  return count;
+}
+
+async function removeUserFromBoardAccessLists(username: string): Promise<void> {
+  for await (const [id, board] of storage.entries<Board>(BOARDS_NAMESPACE)) {
+    const allowedUsers = board.allowedUsers ?? [];
+
+    if (!allowedUsers.includes(username)) {
+      continue;
+    }
+
+    await storage.set(BOARDS_NAMESPACE, id, {
+      ...board,
+      allowedUsers: allowedUsers.filter((entry) => entry !== username),
+    });
+  }
+}
+
+export async function deleteUser(username: string): Promise<void> {
+  const user = await getUser(username);
+
+  if (!user) {
+    throw new UserNotFoundError();
+  }
+
+  if (user.isAdmin && (await countAdminUsers()) <= 1) {
+    throw new UserValidationError("Cannot delete the last administrator.");
+  }
+
+  await removeUserFromBoardAccessLists(username);
+  await storage.delete(USERS_NAMESPACE, username);
+}
+
 export async function bootstrapAdminIfNeeded(): Promise<void> {
   const username = process.env.TEESE_ADMIN_USERNAME;
   const password = process.env.TEESE_ADMIN_PASSWORD;
@@ -88,5 +131,12 @@ export class UserValidationError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "UserValidationError";
+  }
+}
+
+export class UserNotFoundError extends Error {
+  constructor(message = "User not found.") {
+    super(message);
+    this.name = "UserNotFoundError";
   }
 }

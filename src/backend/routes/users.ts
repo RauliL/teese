@@ -1,6 +1,13 @@
 import { Router } from "express";
 import type { CreateUserRequest } from "../../types.js";
-import { createUser, listUsers, UserValidationError } from "../users.js";
+import type { AuthenticatedRequest } from "../middleware/auth.js";
+import {
+  createUser,
+  deleteUser,
+  listUsers,
+  UserNotFoundError,
+  UserValidationError,
+} from "../users.js";
 
 const router = Router();
 
@@ -27,6 +34,33 @@ router.post("/", async (req, res) => {
   } catch (error) {
     if (error instanceof UserValidationError) {
       res.status(400).json({ error: error.message });
+      return;
+    }
+
+    throw error;
+  }
+});
+
+router.delete("/:username", async (req, res) => {
+  const targetUsername = req.params.username;
+  const { username: currentUsername } = (req as AuthenticatedRequest).user;
+
+  if (targetUsername === currentUsername) {
+    res.status(400).json({ error: "You cannot delete your own account." });
+    return;
+  }
+
+  try {
+    await deleteUser(targetUsername);
+    res.status(204).send();
+  } catch (error) {
+    if (error instanceof UserValidationError) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+
+    if (error instanceof UserNotFoundError) {
+      res.status(404).json({ error: error.message });
       return;
     }
 

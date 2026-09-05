@@ -28,3 +28,9 @@ export async function createUser(request: {
 export async function listUsers(): Promise<{ users: PublicUser[] }> {
   return apiFetch<{ users: PublicUser[] }>("/api/users");
 }
+
+export async function deleteUser(username: string): Promise<void> {
+  await apiFetch(`/api/users/${encodeURIComponent(username)}`, {
+    method: "DELETE",
+  });
+}

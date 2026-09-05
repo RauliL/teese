@@ -105,6 +105,11 @@ const rawMessages = defineMessages({
   "admin.administrator": { defaultMessage: "Administrator" },
   "admin.createUserFailed": { defaultMessage: "Could not create user." },
   "admin.creatingUser": { defaultMessage: "Creating..." },
+  "admin.deleteUser": { defaultMessage: "Delete user" },
+  "admin.deleteUserConfirm": {
+    defaultMessage: 'Delete user "{username}"?',
+  },
+  "admin.deleteUserFailed": { defaultMessage: "Could not delete user." },
 
   "table.name": { defaultMessage: "Name" },
   "table.created": { defaultMessage: "Created" },
@@ -114,6 +119,7 @@ const rawMessages = defineMessages({
   "table.role": { defaultMessage: "Role" },
   "table.edit": { defaultMessage: "Edit" },
   "table.deleteBoardAria": { defaultMessage: "Delete {name}" },
+  "table.deleteUserAria": { defaultMessage: "Delete {username}" },
 });
 
 export type MessageKey = keyof typeof rawMessages;
