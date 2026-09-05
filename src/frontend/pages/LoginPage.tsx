@@ -7,15 +7,12 @@ import { LoadingScreen } from "../components/LoadingScreen.js";
 import { LoginForm } from "../components/LoginForm.js";
 import { useAuth } from "../context/AuthContext.js";
 
-function getRedirectPath(
-  user: { isAdmin: boolean },
-  from: string | undefined,
-): string {
+function getRedirectPath(from: string | undefined): string {
   if (from && from !== "/login") {
     return from;
   }
 
-  return user.isAdmin ? "/admin" : "/";
+  return "/";
 }
 
 export function LoginPage() {
@@ -29,7 +26,7 @@ export function LoginPage() {
   }
 
   if (user) {
-    return <Navigate to={getRedirectPath(user, from)} replace />;
+    return <Navigate to={getRedirectPath(from)} replace />;
   }
 
   return (

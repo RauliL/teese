@@ -8,26 +8,33 @@ import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
 import type { PublicUser } from "../../../types.js";
 import * as authApi from "../../api/auth.js";
+import * as boardsApi from "../../api/boards.js";
 import { ApiError } from "../../api/client.js";
 
 export function DashboardPage() {
   const [users, setUsers] = useState<PublicUser[]>([]);
+  const [boardCount, setBoardCount] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
 
-    async function loadUsers() {
+    async function loadDashboard() {
       try {
-        const response = await authApi.listUsers();
+        const [usersResponse, boardsResponse] = await Promise.all([
+          authApi.listUsers(),
+          boardsApi.listBoards(),
+        ]);
+
         if (!cancelled) {
-          setUsers(response.users);
+          setUsers(usersResponse.users);
+          setBoardCount(boardsResponse.boards.length);
         }
       } catch (err) {
         if (!cancelled) {
           setError(
-            err instanceof ApiError ? err.message : "Could not load users.",
+            err instanceof ApiError ? err.message : "Could not load dashboard.",
           );
         }
       } finally {
@@ -37,7 +44,7 @@ export function DashboardPage() {
       }
     }
 
-    void loadUsers();
+    void loadDashboard();
 
     return () => {
       cancelled = true;
@@ -49,7 +56,7 @@ export function DashboardPage() {
   const stats = [
     { label: "Total users", value: users.length },
     { label: "Administrators", value: adminCount },
-    { label: "Regular users", value: users.length - adminCount },
+    { label: "Boards", value: boardCount },
   ];
 
   return (

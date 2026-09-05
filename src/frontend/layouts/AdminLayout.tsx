@@ -2,6 +2,8 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PeopleIcon from "@mui/icons-material/People";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import ViewKanbanIcon from "@mui/icons-material/ViewKanban";
+import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -21,17 +23,23 @@ const drawerWidth = 240;
 
 const navItems = [
   { label: "Dashboard", to: "/admin", icon: <DashboardIcon /> },
+  { label: "Manage boards", to: "/admin/boards", icon: <ViewKanbanIcon /> },
   { label: "Users", to: "/admin/users", icon: <PeopleIcon /> },
   {
     label: "Create user",
     to: "/admin/users/new",
     icon: <PersonAddIcon />,
   },
+  { label: "Kanban view", to: "/", icon: <ViewModuleIcon /> },
 ];
 
 function isNavItemSelected(pathname: string, to: string): boolean {
   if (to === "/admin") {
     return pathname === "/admin";
+  }
+
+  if (to === "/") {
+    return false;
   }
 
   return pathname.startsWith(to);
