@@ -2,8 +2,15 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import React from "react";
+import { useMessages } from "../i18n/useMessages.js";
 
-export function LoadingScreen({ message = "Loading..." }: { message?: string }) {
+type LoadingScreenProps = {
+  message?: string;
+};
+
+export function LoadingScreen({ message }: LoadingScreenProps) {
+  const { t } = useMessages();
+
   return (
     <Box
       sx={{
@@ -14,7 +21,9 @@ export function LoadingScreen({ message = "Loading..." }: { message?: string }) 
       }}
     >
       <CircularProgress />
-      <Typography color="text.secondary">{message}</Typography>
+      <Typography color="text.secondary">
+        {message ?? t("app.loading")}
+      </Typography>
     </Box>
   );
 }

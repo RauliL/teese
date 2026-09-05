@@ -9,6 +9,7 @@ import React, {
 import type { LoginRequest, PublicUser } from "../../types.js";
 import * as authApi from "../api/auth.js";
 import { ApiError, getStoredToken, setStoredToken } from "../api/client.js";
+import { useMessages } from "../i18n/useMessages.js";
 
 type AuthContextValue = {
   user: PublicUser | null;
@@ -22,6 +23,7 @@ type AuthContextValue = {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const { t } = useMessages();
   const [user, setUser] = useState<PublicUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -64,11 +66,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(response.user);
     } catch (err) {
       const message =
-        err instanceof ApiError ? err.message : "Login failed.";
+        err instanceof ApiError ? err.message : t("auth.loginFailed");
       setError(message);
       throw err;
     }
-  }, []);
+  }, [t]);
 
   const logout = useCallback(() => {
     setStoredToken(null);

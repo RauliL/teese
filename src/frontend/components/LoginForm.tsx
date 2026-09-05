@@ -5,9 +5,11 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { FormEvent, useState } from "react";
 import { useAuth } from "../context/AuthContext.js";
+import { useMessages } from "../i18n/useMessages.js";
 
 export function LoginForm() {
   const { login, error, clearError } = useAuth();
+  const { t } = useMessages();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -29,12 +31,12 @@ export function LoginForm() {
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate>
       <Typography component="h1" variant="h5" gutterBottom>
-        Sign in
+        {t("app.signIn")}
       </Typography>
       <TextField
         id="username"
         name="username"
-        label="Username"
+        label={t("auth.username")}
         autoComplete="username"
         value={username}
         onChange={(event) => setUsername(event.target.value)}
@@ -45,7 +47,7 @@ export function LoginForm() {
       <TextField
         id="password"
         name="password"
-        label="Password"
+        label={t("auth.password")}
         type="password"
         autoComplete="current-password"
         value={password}
@@ -66,7 +68,7 @@ export function LoginForm() {
         disabled={submitting}
         sx={{ mt: 3 }}
       >
-        {submitting ? "Signing in..." : "Sign in"}
+        {submitting ? t("app.signingIn") : t("app.signIn")}
       </Button>
     </Box>
   );

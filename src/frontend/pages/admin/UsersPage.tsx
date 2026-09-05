@@ -16,8 +16,10 @@ import { Link as RouterLink } from "react-router-dom";
 import type { PublicUser } from "../../../types.js";
 import * as authApi from "../../api/auth.js";
 import { ApiError } from "../../api/client.js";
+import { useMessages } from "../../i18n/useMessages.js";
 
 export function UsersPage() {
+  const { t } = useMessages();
   const [users, setUsers] = useState<PublicUser[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -34,7 +36,7 @@ export function UsersPage() {
       } catch (err) {
         if (!cancelled) {
           setError(
-            err instanceof ApiError ? err.message : "Could not load users.",
+            err instanceof ApiError ? err.message : t("admin.loadUsersFailed"),
           );
         }
       } finally {
@@ -49,7 +51,7 @@ export function UsersPage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [t]);
 
   return (
     <>
@@ -64,14 +66,14 @@ export function UsersPage() {
         }}
       >
         <Typography component="h1" variant="h4">
-          Users
+          {t("admin.users")}
         </Typography>
         <Button
           component={RouterLink}
           to="/admin/users/new"
           variant="contained"
         >
-          Create user
+          {t("admin.createUser")}
         </Button>
       </Box>
       {error ? (
@@ -88,8 +90,8 @@ export function UsersPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Username</TableCell>
-                <TableCell>Role</TableCell>
+                <TableCell>{t("auth.username")}</TableCell>
+                <TableCell>{t("table.role")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -98,7 +100,11 @@ export function UsersPage() {
                   <TableCell>{user.username}</TableCell>
                   <TableCell>
                     <Chip
-                      label={user.isAdmin ? "Administrator" : "User"}
+                      label={
+                        user.isAdmin
+                          ? t("admin.roleAdministrator")
+                          : t("admin.roleUser")
+                      }
                       color={user.isAdmin ? "primary" : "default"}
                       size="small"
                     />

@@ -12,9 +12,11 @@ import {
 import type { Board } from "../../../types.js";
 import * as boardsApi from "../../api/boards.js";
 import { ApiError } from "../../api/client.js";
+import { useMessages } from "../../i18n/useMessages.js";
 import { BoardDetailView } from "./BoardDetailView.js";
 
 export function BoardDetailPage() {
+  const { t } = useMessages();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [board, setBoard] = useState<Board | null>(null);
@@ -26,7 +28,7 @@ export function BoardDetailPage() {
 
     async function loadBoard() {
       if (!id) {
-        setError("Board id is missing.");
+        setError(t("board.idMissing"));
         setLoading(false);
         return;
       }
@@ -38,7 +40,9 @@ export function BoardDetailPage() {
         }
       } catch (err) {
         if (!cancelled) {
-          setError(err instanceof ApiError ? err.message : "Could not load board.");
+          setError(
+            err instanceof ApiError ? err.message : t("board.loadFailed"),
+          );
         }
       } finally {
         if (!cancelled) {
@@ -52,7 +56,7 @@ export function BoardDetailPage() {
     return () => {
       cancelled = true;
     };
-  }, [id]);
+  }, [id, t]);
 
   if (loading) {
     return (
@@ -66,10 +70,10 @@ export function BoardDetailPage() {
     return (
       <>
         <Alert severity="error" sx={{ mb: 3 }}>
-          {error ?? "Board not found."}
+          {error ?? t("board.notFound")}
         </Alert>
         <Button component={RouterLink} to="/admin/boards" variant="outlined">
-          Back to boards
+          {t("nav.backToBoards")}
         </Button>
       </>
     );
@@ -91,7 +95,7 @@ export function BoardDetailPage() {
           {board.name}
         </Typography>
         <Button component={RouterLink} to="/admin/boards" variant="outlined">
-          Back to boards
+          {t("nav.backToBoards")}
         </Button>
       </Box>
       <BoardDetailView

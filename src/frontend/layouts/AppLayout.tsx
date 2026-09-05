@@ -9,9 +9,11 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.js";
+import { useMessages } from "../i18n/useMessages.js";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth();
+  const { t } = useMessages();
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -24,7 +26,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       <AppBar position="static" color="default" elevation={1}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Teese
+            {t("app.title")}
           </Typography>
           <Typography
             variant="body2"
@@ -40,7 +42,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               startIcon={<AdminPanelSettingsIcon />}
               sx={{ mr: 1 }}
             >
-              Admin
+              {t("app.admin")}
             </Button>
           ) : null}
           <Button
@@ -48,7 +50,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             startIcon={<LogoutIcon />}
             onClick={handleLogout}
           >
-            Sign out
+            {t("app.signOut")}
           </Button>
         </Toolbar>
       </AppBar>

@@ -10,8 +10,10 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import * as boardsApi from "../../api/boards.js";
 import { ApiError } from "../../api/client.js";
 import { BoardAllowedUsersField } from "../../components/BoardAllowedUsersField.js";
+import { useMessages } from "../../i18n/useMessages.js";
 
 export function CreateBoardPage() {
+  const { t } = useMessages();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [allowedUsers, setAllowedUsers] = useState<string[]>([]);
@@ -27,7 +29,9 @@ export function CreateBoardPage() {
       const { board } = await boardsApi.createBoard({ name, allowedUsers });
       navigate(`/admin/boards/${board.id}`);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not create board.");
+      setError(
+        err instanceof ApiError ? err.message : t("board.createFailed"),
+      );
     } finally {
       setSubmitting(false);
     }
@@ -46,10 +50,10 @@ export function CreateBoardPage() {
         }}
       >
         <Typography component="h1" variant="h4">
-          Create board
+          {t("board.create")}
         </Typography>
         <Button component={RouterLink} to="/admin/boards" variant="outlined">
-          Back to boards
+          {t("nav.backToBoards")}
         </Button>
       </Box>
       <Paper sx={{ p: 3, maxWidth: 640 }}>
@@ -57,7 +61,7 @@ export function CreateBoardPage() {
           <Stack spacing={2}>
             <TextField
               id="board-name"
-              label="Board name"
+              label={t("board.name")}
               value={name}
               onChange={(event) => setName(event.target.value)}
               required
@@ -71,7 +75,7 @@ export function CreateBoardPage() {
             />
             {error ? <Alert severity="error">{error}</Alert> : null}
             <Button type="submit" variant="contained" disabled={submitting}>
-              {submitting ? "Creating..." : "Create board"}
+              {submitting ? t("board.creating") : t("board.create")}
             </Button>
           </Stack>
         </Box>

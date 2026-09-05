@@ -10,9 +10,11 @@ import type { Board } from "../../types.js";
 import * as myBoardsApi from "../api/myBoards.js";
 import { ApiError } from "../api/client.js";
 import { KanbanBoard } from "../components/kanban/KanbanBoard.js";
+import { useMessages } from "../i18n/useMessages.js";
 import { AppLayout } from "../layouts/AppLayout.js";
 
 export function KanbanPage() {
+  const { t } = useMessages();
   const [boards, setBoards] = useState<Board[]>([]);
   const [selectedBoardId, setSelectedBoardId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +42,9 @@ export function KanbanPage() {
       } catch (err) {
         if (!cancelled) {
           setError(
-            err instanceof ApiError ? err.message : "Could not load boards.",
+            err instanceof ApiError
+              ? err.message
+              : t("kanban.loadBoardsFailed"),
           );
         }
       } finally {
@@ -55,7 +59,7 @@ export function KanbanPage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [t]);
 
   function handleBoardUpdated(updatedBoard: Board) {
     setBoards((current) =>
@@ -82,7 +86,7 @@ export function KanbanPage() {
       ) : boards.length === 0 ? (
         <Paper sx={{ p: 4 }}>
           <Typography color="text.secondary">
-            You do not have access to any boards yet.
+            {t("kanban.noBoardsAccess")}
           </Typography>
         </Paper>
       ) : (
@@ -95,11 +99,7 @@ export function KanbanPage() {
             sx={{ mb: 3, borderBottom: 1, borderColor: "divider" }}
           >
             {boards.map((board) => (
-              <Tab
-                key={board.id}
-                value={board.id}
-                label={board.name}
-              />
+              <Tab key={board.id} value={board.id} label={board.name} />
             ))}
           </Tabs>
           {selectedBoard ? (

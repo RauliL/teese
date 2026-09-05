@@ -16,11 +16,11 @@ import React, { FormEvent, useState } from "react";
 import type { Board, Item, ItemStatus } from "../../../types.js";
 import {
   ITEM_STATUSES,
-  ITEM_STATUS_LABELS,
   ItemStatus as ItemStatusEnum,
 } from "../../../types.js";
 import * as myBoardsApi from "../../api/myBoards.js";
 import { ApiError } from "../../api/client.js";
+import { useMessages } from "../../i18n/useMessages.js";
 import { KanbanItemDialog } from "./KanbanItemDialog.js";
 
 type KanbanBoardProps = {
@@ -37,6 +37,7 @@ function isItemStatus(value: string): value is ItemStatus {
 }
 
 export function KanbanBoard({ board, onBoardUpdated }: KanbanBoardProps) {
+  const { t, itemStatusLabel } = useMessages();
   const [newItemTitle, setNewItemTitle] = useState("");
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -56,7 +57,9 @@ export function KanbanBoard({ board, onBoardUpdated }: KanbanBoardProps) {
       onBoardUpdated(updatedBoard);
       setNewItemTitle("");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not create item.");
+      setError(
+        err instanceof ApiError ? err.message : t("kanban.createItemFailed"),
+      );
     } finally {
       setSubmitting(false);
     }
@@ -124,7 +127,9 @@ export function KanbanBoard({ board, onBoardUpdated }: KanbanBoardProps) {
       onBoardUpdated(updatedBoard);
     } catch (err) {
       onBoardUpdated(previousBoard);
-      setError(err instanceof ApiError ? err.message : "Could not move item.");
+      setError(
+        err instanceof ApiError ? err.message : t("kanban.moveItemFailed"),
+      );
     } finally {
       setMovingItemId(null);
     }
@@ -136,10 +141,10 @@ export function KanbanBoard({ board, onBoardUpdated }: KanbanBoardProps) {
         <Box component="form" onSubmit={handleCreateItem}>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             <TextField
-              label="New item"
+              label={t("kanban.newItem")}
               value={newItemTitle}
               onChange={(event) => setNewItemTitle(event.target.value)}
-              placeholder="What needs to be done?"
+              placeholder={t("kanban.newItemPlaceholder")}
               required
               fullWidth
               disabled={Boolean(movingItemId)}
@@ -149,7 +154,7 @@ export function KanbanBoard({ board, onBoardUpdated }: KanbanBoardProps) {
               variant="contained"
               disabled={submitting || Boolean(movingItemId)}
             >
-              Add to ToDo
+              {t("kanban.addToTodo")}
             </Button>
           </Stack>
         </Box>
@@ -190,14 +195,14 @@ export function KanbanBoard({ board, onBoardUpdated }: KanbanBoardProps) {
                     }}
                   >
                     <Typography variant="subtitle1" fontWeight={700} gutterBottom>
-                      {ITEM_STATUS_LABELS[status]}
+                      {itemStatusLabel(status)}
                     </Typography>
                     <Typography
                       variant="caption"
                       color="text.secondary"
                       sx={{ display: "block", mb: 2 }}
                     >
-                      {items.length} item{items.length === 1 ? "" : "s"}
+                      {t("kanban.itemCount", { count: items.length })}
                     </Typography>
                     <Box
                       ref={provided.innerRef}

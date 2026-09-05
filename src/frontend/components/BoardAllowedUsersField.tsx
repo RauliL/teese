@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import type { PublicUser } from "../../../types.js";
 import * as authApi from "../api/auth.js";
 import { ApiError } from "../api/client.js";
+import { useMessages } from "../i18n/useMessages.js";
 
 type BoardAllowedUsersFieldProps = {
   value: string[];
@@ -17,6 +18,7 @@ export function BoardAllowedUsersField({
   onChange,
   disabled = false,
 }: BoardAllowedUsersFieldProps) {
+  const { t } = useMessages();
   const [users, setUsers] = useState<PublicUser[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,7 +34,9 @@ export function BoardAllowedUsersField({
       } catch (err) {
         if (!cancelled) {
           setError(
-            err instanceof ApiError ? err.message : "Could not load users.",
+            err instanceof ApiError
+              ? err.message
+              : t("board.loadUsersFailed"),
           );
         }
       }
@@ -43,7 +47,7 @@ export function BoardAllowedUsersField({
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [t]);
 
   const options = users.map((user) => user.username);
 
@@ -58,8 +62,8 @@ export function BoardAllowedUsersField({
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Allowed users"
-            helperText="Only selected users can access this board in the kanban UI. Administrators always have access."
+            label={t("board.allowedUsers")}
+            helperText={t("board.allowedUsersHelp")}
           />
         )}
       />

@@ -6,6 +6,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "./App.js";
 import { AuthProvider } from "./context/AuthContext.js";
+import { AppIntlProvider } from "./i18n/AppIntlProvider.js";
 import { theme } from "./theme.js";
 
 const container = document.getElementById("root");
@@ -16,11 +17,13 @@ root.render(
     <InitColorSchemeScript defaultMode="system" />
     <ThemeProvider theme={theme} defaultMode="system">
       <CssBaseline enableColorScheme />
-      <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </AuthProvider>
+      <AppIntlProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </AuthProvider>
+      </AppIntlProvider>
     </ThemeProvider>
   </>,
 );

@@ -10,8 +10,10 @@ import React, { FormEvent, useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import * as authApi from "../../api/auth.js";
 import { ApiError } from "../../api/client.js";
+import { useMessages } from "../../i18n/useMessages.js";
 
 export function CreateUserPage() {
+  const { t } = useMessages();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +30,9 @@ export function CreateUserPage() {
       await authApi.createUser({ username, password, isAdmin });
       navigate("/admin/users");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not create user.");
+      setError(
+        err instanceof ApiError ? err.message : t("admin.createUserFailed"),
+      );
     } finally {
       setSubmitting(false);
     }
@@ -47,17 +51,17 @@ export function CreateUserPage() {
         }}
       >
         <Typography component="h1" variant="h4">
-          Create user
+          {t("admin.createUser")}
         </Typography>
         <Button component={RouterLink} to="/admin/users" variant="outlined">
-          Back to users
+          {t("nav.backToUsers")}
         </Button>
       </Box>
       <Paper sx={{ p: 3, maxWidth: 480 }}>
         <Box component="form" onSubmit={handleSubmit} noValidate>
           <TextField
             id="new-username"
-            label="Username"
+            label={t("auth.username")}
             value={username}
             onChange={(event) => setUsername(event.target.value)}
             margin="normal"
@@ -66,7 +70,7 @@ export function CreateUserPage() {
           />
           <TextField
             id="new-password"
-            label="Password"
+            label={t("auth.password")}
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
@@ -82,7 +86,7 @@ export function CreateUserPage() {
                 onChange={(event) => setIsAdmin(event.target.checked)}
               />
             }
-            label="Administrator"
+            label={t("admin.administrator")}
             sx={{ mt: 1 }}
           />
           {error ? (
@@ -96,7 +100,7 @@ export function CreateUserPage() {
             disabled={submitting}
             sx={{ mt: 3 }}
           >
-            {submitting ? "Creating..." : "Create user"}
+            {submitting ? t("admin.creatingUser") : t("admin.createUser")}
           </Button>
         </Box>
       </Paper>

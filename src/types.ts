@@ -38,12 +38,6 @@ export enum ItemStatus {
 
 export const ITEM_STATUSES = Object.values(ItemStatus);
 
-export const ITEM_STATUS_LABELS: Record<ItemStatus, string> = {
-  [ItemStatus.ToDo]: "ToDo",
-  [ItemStatus.InProgress]: "In Progress",
-  [ItemStatus.Done]: "Done",
-};
-
 export type StatusUpdateHistoryEntry = {
   id: string;
   type: "status_update";

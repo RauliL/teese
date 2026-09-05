@@ -17,12 +17,11 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { FormEvent, useEffect, useState } from "react";
 import type { Board, Item, ItemStatus } from "../../../types.js";
-import {
-  ITEM_STATUSES,
-  ITEM_STATUS_LABELS,
-} from "../../../types.js";
+import { ITEM_STATUSES } from "../../../types.js";
 import * as myBoardsApi from "../../api/myBoards.js";
 import { ApiError } from "../../api/client.js";
+import { messages } from "../../i18n/messages.js";
+import { useMessages } from "../../i18n/useMessages.js";
 import { formatDateTime } from "../../utils/formatDateTime.js";
 
 type KanbanItemDialogProps = {
@@ -40,6 +39,7 @@ export function KanbanItemDialog({
   onClose,
   onBoardUpdated,
 }: KanbanItemDialogProps) {
+  const { t, itemStatusLabel, formatDescriptor } = useMessages();
   const [title, setTitle] = useState(item.title);
   const [status, setStatus] = useState<ItemStatus>(item.status);
   const [comment, setComment] = useState("");
@@ -68,14 +68,16 @@ export function KanbanItemDialog({
       onBoardUpdated(board);
       onClose();
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not update item.");
+      setError(
+        err instanceof ApiError ? err.message : t("item.updateFailed"),
+      );
     } finally {
       setSubmitting(false);
     }
   }
 
   async function handleDelete() {
-    if (!window.confirm(`Delete item "${item.title}"?`)) {
+    if (!window.confirm(t("item.deleteConfirm", { title: item.title }))) {
       return;
     }
 
@@ -87,7 +89,9 @@ export function KanbanItemDialog({
       onBoardUpdated(board);
       onClose();
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not delete item.");
+      setError(
+        err instanceof ApiError ? err.message : t("item.deleteFailed"),
+      );
     } finally {
       setSubmitting(false);
     }
@@ -105,7 +109,9 @@ export function KanbanItemDialog({
       onBoardUpdated(board);
       setComment("");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not add comment.");
+      setError(
+        err instanceof ApiError ? err.message : t("item.addCommentFailed"),
+      );
     } finally {
       setSubmitting(false);
     }
@@ -113,22 +119,24 @@ export function KanbanItemDialog({
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Item details</DialogTitle>
+      <DialogTitle>{t("item.details")}</DialogTitle>
       <DialogContent dividers>
         <Box component="form" id="kanban-item-form" onSubmit={handleSave}>
           <Stack spacing={2}>
             <TextField
-              label="Title"
+              label={t("item.title")}
               value={title}
               onChange={(event) => setTitle(event.target.value)}
               required
               fullWidth
             />
             <FormControl fullWidth>
-              <InputLabel id="kanban-item-status-label">Status</InputLabel>
+              <InputLabel id="kanban-item-status-label">
+                {t("item.status")}
+              </InputLabel>
               <Select
                 labelId="kanban-item-status-label"
-                label="Status"
+                label={t("item.status")}
                 value={status}
                 onChange={(event) =>
                   setStatus(event.target.value as ItemStatus)
@@ -136,7 +144,7 @@ export function KanbanItemDialog({
               >
                 {ITEM_STATUSES.map((entry) => (
                   <MenuItem key={entry} value={entry}>
-                    {ITEM_STATUS_LABELS[entry]}
+                    {itemStatusLabel(entry)}
                   </MenuItem>
                 ))}
               </Select>
@@ -145,7 +153,7 @@ export function KanbanItemDialog({
         </Box>
 
         <Typography variant="subtitle2" sx={{ mt: 3, mb: 1 }}>
-          History
+          {t("item.history")}
         </Typography>
         <List dense>
           {[...item.history]
@@ -155,8 +163,13 @@ export function KanbanItemDialog({
                 <ListItemText
                   primary={
                     entry.type === "status_update"
-                      ? `${entry.username} → ${ITEM_STATUS_LABELS[entry.status]}`
-                      : `${entry.username} commented`
+                      ? formatDescriptor(messages["item.historyStatusUpdate"], {
+                          username: entry.username,
+                          status: itemStatusLabel(entry.status),
+                        })
+                      : formatDescriptor(messages["item.historyComment"], {
+                          username: entry.username,
+                        })
                   }
                   secondary={
                     entry.type === "comment"
@@ -170,7 +183,7 @@ export function KanbanItemDialog({
 
         <Box component="form" onSubmit={handleAddComment} sx={{ mt: 2 }}>
           <TextField
-            label="Add comment"
+            label={t("item.addComment")}
             value={comment}
             onChange={(event) => setComment(event.target.value)}
             fullWidth
@@ -183,7 +196,7 @@ export function KanbanItemDialog({
             disabled={submitting || comment.trim().length === 0}
             sx={{ mt: 2 }}
           >
-            Add comment
+            {t("item.addComment")}
           </Button>
         </Box>
 
@@ -195,17 +208,17 @@ export function KanbanItemDialog({
       </DialogContent>
       <DialogActions>
         <Button color="error" onClick={() => void handleDelete()} disabled={submitting}>
-          Delete
+          {t("item.delete")}
         </Button>
         <Box sx={{ flexGrow: 1 }} />
-        <Button onClick={onClose}>Close</Button>
+        <Button onClick={onClose}>{t("item.close")}</Button>
         <Button
           type="submit"
           form="kanban-item-form"
           variant="contained"
           disabled={submitting}
         >
-          Save
+          {t("item.save")}
         </Button>
       </DialogActions>
     </Dialog>

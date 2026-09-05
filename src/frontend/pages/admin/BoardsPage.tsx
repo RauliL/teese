@@ -17,9 +17,11 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import type { BoardSummary } from "../../../types.js";
 import * as boardsApi from "../../api/boards.js";
 import { ApiError } from "../../api/client.js";
+import { useMessages } from "../../i18n/useMessages.js";
 import { formatDateTime } from "../../utils/formatDateTime.js";
 
 export function BoardsPage() {
+  const { t } = useMessages();
   const navigate = useNavigate();
   const [boards, setBoards] = useState<BoardSummary[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +35,9 @@ export function BoardsPage() {
       const response = await boardsApi.listBoards();
       setBoards(response.boards);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not load boards.");
+      setError(
+        err instanceof ApiError ? err.message : t("board.loadBoardsFailed"),
+      );
     } finally {
       setLoading(false);
     }
@@ -44,7 +48,7 @@ export function BoardsPage() {
   }, []);
 
   async function handleDelete(board: BoardSummary) {
-    if (!window.confirm(`Delete board "${board.name}"?`)) {
+    if (!window.confirm(t("board.deleteConfirm", { name: board.name }))) {
       return;
     }
 
@@ -52,7 +56,9 @@ export function BoardsPage() {
       await boardsApi.deleteBoard(board.id);
       setBoards((current) => current.filter((entry) => entry.id !== board.id));
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not delete board.");
+      setError(
+        err instanceof ApiError ? err.message : t("board.deleteFailed"),
+      );
     }
   }
 
@@ -69,14 +75,14 @@ export function BoardsPage() {
         }}
       >
         <Typography component="h1" variant="h4">
-          Boards
+          {t("admin.boards")}
         </Typography>
         <Button
           component={RouterLink}
           to="/admin/boards/new"
           variant="contained"
         >
-          Create board
+          {t("board.create")}
         </Button>
       </Box>
       {error ? (
@@ -90,18 +96,18 @@ export function BoardsPage() {
         </Box>
       ) : boards.length === 0 ? (
         <Paper sx={{ p: 3 }}>
-          <Typography color="text.secondary">No boards yet.</Typography>
+          <Typography color="text.secondary">{t("board.noBoardsYet")}</Typography>
         </Paper>
       ) : (
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Created</TableCell>
-                <TableCell align="right">Users</TableCell>
-                <TableCell align="right">Items</TableCell>
-                <TableCell align="right">Actions</TableCell>
+                <TableCell>{t("table.name")}</TableCell>
+                <TableCell>{t("table.created")}</TableCell>
+                <TableCell align="right">{t("table.users")}</TableCell>
+                <TableCell align="right">{t("table.items")}</TableCell>
+                <TableCell align="right">{t("table.actions")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -124,10 +130,10 @@ export function BoardsPage() {
                       size="small"
                       onClick={() => navigate(`/admin/boards/${board.id}`)}
                     >
-                      Edit
+                      {t("table.edit")}
                     </Button>
                     <IconButton
-                      aria-label={`Delete ${board.name}`}
+                      aria-label={t("table.deleteBoardAria", { name: board.name })}
                       color="error"
                       onClick={() => void handleDelete(board)}
                     >
