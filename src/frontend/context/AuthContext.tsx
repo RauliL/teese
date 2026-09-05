@@ -37,7 +37,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     try {
       const { user: currentUser } = await authApi.getCurrentUser();
-      setUser(currentUser);
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        setStoredToken(null);
+        setUser(null);
+      }
     } catch {
       setStoredToken(null);
       setUser(null);
