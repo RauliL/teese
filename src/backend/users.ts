@@ -29,8 +29,8 @@ export async function hasUsers(): Promise<boolean> {
 
 export async function listUsers(): Promise<PublicUser[]> {
   const users: PublicUser[] = [];
-  for await (const entry of storage.entries<User>(USERS_NAMESPACE)) {
-    users.push(toPublicUser(entry.value));
+  for await (const [, value] of storage.entries<User>(USERS_NAMESPACE)) {
+    users.push(toPublicUser(value));
   }
   return users.sort((a, b) => a.username.localeCompare(b.username));
 }
