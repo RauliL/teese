@@ -60,7 +60,9 @@ function validateBoardName(name: unknown): string {
   }
 
   if (name.trim().length > 200) {
-    throw new BoardValidationError("Board name must be at most 200 characters.");
+    throw new BoardValidationError(
+      "Board name must be at most 200 characters.",
+    );
   }
 
   return name.trim();
@@ -72,7 +74,9 @@ function validateItemTitle(title: unknown): string {
   }
 
   if (title.trim().length > 200) {
-    throw new BoardValidationError("Item title must be at most 200 characters.");
+    throw new BoardValidationError(
+      "Item title must be at most 200 characters.",
+    );
   }
 
   return title.trim();

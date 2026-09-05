@@ -34,9 +34,7 @@ export function BoardAllowedUsersField({
       } catch (err) {
         if (!cancelled) {
           setError(
-            err instanceof ApiError
-              ? err.message
-              : t("board.loadUsersFailed"),
+            err instanceof ApiError ? err.message : t("board.loadUsersFailed"),
           );
         }
       }

@@ -1,9 +1,7 @@
 import type { LoginRequest, LoginResponse, PublicUser } from "../../types.js";
 import { apiFetch } from "./client.js";
 
-export async function login(
-  credentials: LoginRequest,
-): Promise<LoginResponse> {
+export async function login(credentials: LoginRequest): Promise<LoginResponse> {
   return apiFetch<LoginResponse>("/api/auth/login", {
     method: "POST",
     body: JSON.stringify(credentials),

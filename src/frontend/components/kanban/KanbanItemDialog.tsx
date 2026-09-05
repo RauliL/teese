@@ -68,9 +68,7 @@ export function KanbanItemDialog({
       onBoardUpdated(board);
       onClose();
     } catch (err) {
-      setError(
-        err instanceof ApiError ? err.message : t("item.updateFailed"),
-      );
+      setError(err instanceof ApiError ? err.message : t("item.updateFailed"));
     } finally {
       setSubmitting(false);
     }
@@ -89,9 +87,7 @@ export function KanbanItemDialog({
       onBoardUpdated(board);
       onClose();
     } catch (err) {
-      setError(
-        err instanceof ApiError ? err.message : t("item.deleteFailed"),
-      );
+      setError(err instanceof ApiError ? err.message : t("item.deleteFailed"));
     } finally {
       setSubmitting(false);
     }
@@ -207,7 +203,11 @@ export function KanbanItemDialog({
         ) : null}
       </DialogContent>
       <DialogActions>
-        <Button color="error" onClick={() => void handleDelete()} disabled={submitting}>
+        <Button
+          color="error"
+          onClick={() => void handleDelete()}
+          disabled={submitting}
+        >
           {t("item.delete")}
         </Button>
         <Box sx={{ flexGrow: 1 }} />

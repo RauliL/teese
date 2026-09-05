@@ -49,7 +49,9 @@ export function UsersPage() {
   }, [t]);
 
   async function handleDelete(user: PublicUser) {
-    if (!window.confirm(t("admin.deleteUserConfirm", { username: user.username }))) {
+    if (
+      !window.confirm(t("admin.deleteUserConfirm", { username: user.username }))
+    ) {
       return;
     }
 

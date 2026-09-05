@@ -56,9 +56,7 @@ export function BoardsPage() {
       await boardsApi.deleteBoard(board.id);
       setBoards((current) => current.filter((entry) => entry.id !== board.id));
     } catch (err) {
-      setError(
-        err instanceof ApiError ? err.message : t("board.deleteFailed"),
-      );
+      setError(err instanceof ApiError ? err.message : t("board.deleteFailed"));
     }
   }
 
@@ -96,7 +94,9 @@ export function BoardsPage() {
         </Box>
       ) : boards.length === 0 ? (
         <Paper sx={{ p: 3 }}>
-          <Typography color="text.secondary">{t("board.noBoardsYet")}</Typography>
+          <Typography color="text.secondary">
+            {t("board.noBoardsYet")}
+          </Typography>
         </Paper>
       ) : (
         <TableContainer component={Paper}>
@@ -133,7 +133,9 @@ export function BoardsPage() {
                       {t("table.edit")}
                     </Button>
                     <IconButton
-                      aria-label={t("table.deleteBoardAria", { name: board.name })}
+                      aria-label={t("table.deleteBoardAria", {
+                        name: board.name,
+                      })}
                       color="error"
                       onClick={() => void handleDelete(board)}
                     >

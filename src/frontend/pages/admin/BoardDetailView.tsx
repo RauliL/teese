@@ -47,9 +47,7 @@ export function BoardDetailView({
       });
       onBoardUpdated(updatedBoard);
     } catch (err) {
-      setError(
-        err instanceof ApiError ? err.message : t("board.updateFailed"),
-      );
+      setError(err instanceof ApiError ? err.message : t("board.updateFailed"));
     } finally {
       setSubmitting(false);
     }
@@ -64,9 +62,7 @@ export function BoardDetailView({
       await boardsApi.deleteBoard(board.id);
       onBoardDeleted();
     } catch (err) {
-      setError(
-        err instanceof ApiError ? err.message : t("board.deleteFailed"),
-      );
+      setError(err instanceof ApiError ? err.message : t("board.deleteFailed"));
     }
   }
 

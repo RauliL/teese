@@ -25,6 +25,7 @@
     "start:dev": "vite dev",
     "clean": "rimraf './dist'",
     "build": "vite build",
+    "lint": "eslint",
     "style:check": "prettier --check .",
     "style:fix": "prettier --write .",
     "prebuild": "$npm_execpath run clean",
@@ -51,13 +52,20 @@
     "vite-spa-server": "^1.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/bcryptjs": "^3.0.0",
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",
     "@types/node": "22",
     "@vitejs/plugin-react": "^6.1.1",
+    "eslint": "^10.10.0",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.12.0",
+    "jiti": "^2.7.0",
     "prettier": "^3.9.6",
-    "rimraf": "^6.1.3"
+    "rimraf": "^6.1.3",
+    "typescript": "npm:@typescript/typescript6",
+    "typescript-eslint": "^8.69.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

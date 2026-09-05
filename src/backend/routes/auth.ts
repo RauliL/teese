@@ -1,10 +1,7 @@
 import { Router } from "express";
 import type { LoginRequest } from "../../types.js";
 import { signAuthToken } from "../jwt.js";
-import {
-  AuthenticatedRequest,
-  requireAuth,
-} from "../middleware/auth.js";
+import { AuthenticatedRequest, requireAuth } from "../middleware/auth.js";
 import { getUser, toPublicUser, verifyUserPassword } from "../users.js";
 
 const router = Router();

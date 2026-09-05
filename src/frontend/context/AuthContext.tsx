@@ -57,20 +57,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     void restoreSession();
   }, [restoreSession]);
 
-  const login = useCallback(async (credentials: LoginRequest) => {
-    setError(null);
+  const login = useCallback(
+    async (credentials: LoginRequest) => {
+      setError(null);
 
-    try {
-      const response = await authApi.login(credentials);
-      setStoredToken(response.token);
-      setUser(response.user);
-    } catch (err) {
-      const message =
-        err instanceof ApiError ? err.message : t("auth.loginFailed");
-      setError(message);
-      throw err;
-    }
-  }, [t]);
+      try {
+        const response = await authApi.login(credentials);
+        setStoredToken(response.token);
+        setUser(response.user);
+      } catch (err) {
+        const message =
+          err instanceof ApiError ? err.message : t("auth.loginFailed");
+        setError(message);
+        throw err;
+      }
+    },
+    [t],
+  );
 
   const logout = useCallback(() => {
     setStoredToken(null);
@@ -94,9 +97,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [user, loading, error, login, logout, clearError],
   );
 
-  return (
-    <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth(): AuthContextValue {

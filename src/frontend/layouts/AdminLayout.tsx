@@ -17,7 +17,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import React, { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
-import { Link as RouterLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link as RouterLink,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { useAuth } from "../context/AuthContext.js";
 import { messages } from "../i18n/messages.js";
 import { useMessages } from "../i18n/useMessages.js";
@@ -84,7 +89,10 @@ export function AdminLayout() {
             {t("app.adminTitle")}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Typography variant="body2" sx={{ display: { xs: "none", sm: "block" } }}>
+            <Typography
+              variant="body2"
+              sx={{ display: { xs: "none", sm: "block" } }}
+            >
               <FormattedMessage
                 {...messages["auth.signedInAs"]}
                 values={{

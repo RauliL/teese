@@ -14,10 +14,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { FormEvent, useState } from "react";
 import type { Board, Item, ItemStatus } from "../../../types.js";
-import {
-  ITEM_STATUSES,
-  ItemStatus as ItemStatusEnum,
-} from "../../../types.js";
+import { ITEM_STATUSES, ItemStatus as ItemStatusEnum } from "../../../types.js";
 import * as myBoardsApi from "../../api/myBoards.js";
 import { ApiError } from "../../api/client.js";
 import { useMessages } from "../../i18n/useMessages.js";
@@ -194,7 +191,11 @@ export function KanbanBoard({ board, onBoardUpdated }: KanbanBoardProps) {
                       transition: "background-color 0.2s ease",
                     }}
                   >
-                    <Typography variant="subtitle1" fontWeight={700} gutterBottom>
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight={700}
+                      gutterBottom
+                    >
                       {itemStatusLabel(status)}
                     </Typography>
                     <Typography
@@ -231,8 +232,7 @@ export function KanbanBoard({ board, onBoardUpdated }: KanbanBoardProps) {
                                 cursor: draggableSnapshot.isDragging
                                   ? "grabbing"
                                   : "grab",
-                                opacity:
-                                  movingItemId === item.id ? 0.6 : 1,
+                                opacity: movingItemId === item.id ? 0.6 : 1,
                               }}
                             >
                               <Card

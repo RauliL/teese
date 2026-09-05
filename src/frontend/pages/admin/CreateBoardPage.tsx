@@ -29,9 +29,7 @@ export function CreateBoardPage() {
       const { board } = await boardsApi.createBoard({ name, allowedUsers });
       navigate(`/admin/boards/${board.id}`);
     } catch (err) {
-      setError(
-        err instanceof ApiError ? err.message : t("board.createFailed"),
-      );
+      setError(err instanceof ApiError ? err.message : t("board.createFailed"));
     } finally {
       setSubmitting(false);
     }
