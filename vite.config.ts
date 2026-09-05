@@ -11,4 +11,9 @@ export default defineConfig({
       serverType: "express",
     }),
   ],
+  resolve: {
+    alias: {
+      '@teese': './src',
+    },
+  },
 });
