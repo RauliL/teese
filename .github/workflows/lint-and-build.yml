@@ -1,0 +1,25 @@
+name: Lint and build
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22.x, 24.x, 26.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install dependencies
+        run: yarn install
+      - name: Check code style
+        run: yarn style:check
+      - name: Run ESLint
+        run: yarn lint
+      - name: Build the entire project
+        run: yarn build
