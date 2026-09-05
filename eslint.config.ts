@@ -5,13 +5,25 @@ import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
 import { defineConfig } from "eslint/config";
 
+const srcFiles = ["src/**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"];
+const reactFiles = ["src/**/*.{jsx,tsx}"];
+
 export default defineConfig([
   {
-    files: ["src/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    ignores: ["dist/**", "node_modules/**"],
+  },
+  {
+    files: srcFiles,
     plugins: { js, formatjs },
     extends: ["js/recommended"],
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
   },
-  tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
+  ...tseslint.configs.recommended.map((config) => ({
+    ...config,
+    files: srcFiles,
+  })),
+  {
+    files: reactFiles,
+    ...pluginReact.configs.flat.recommended,
+  },
 ]);
