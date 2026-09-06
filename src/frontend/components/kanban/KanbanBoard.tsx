@@ -13,12 +13,12 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { FormEvent, FunctionComponent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { Board, Item, ItemStatus } from "../../../types.js";
 import { ITEM_STATUSES, ItemStatus as ItemStatusEnum } from "../../../types.js";
 import * as myBoardsApi from "../../api/myBoards.js";
 import { ApiError } from "../../api/client.js";
 import { useMessages } from "../../i18n/useMessages.js";
-import { KanbanItemDialog } from "./KanbanItemDialog.js";
 
 type KanbanBoardProps = {
   board: Board;
@@ -36,8 +36,8 @@ export const KanbanBoard: FunctionComponent<KanbanBoardProps> = ({
   onBoardUpdated,
 }) => {
   const { t, itemStatusLabel } = useMessages();
+  const navigate = useNavigate();
   const [newItemTitle, setNewItemTitle] = useState("");
-  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [movingItemId, setMovingItemId] = useState<string | null>(null);
@@ -60,16 +60,6 @@ export const KanbanBoard: FunctionComponent<KanbanBoardProps> = ({
       );
     } finally {
       setSubmitting(false);
-    }
-  }
-
-  function handleBoardUpdated(updatedBoard: Board) {
-    onBoardUpdated(updatedBoard);
-    if (selectedItem) {
-      const refreshedItem = updatedBoard.items.find(
-        (entry) => entry.id === selectedItem.id,
-      );
-      setSelectedItem(refreshedItem ?? null);
     }
   }
 
@@ -242,8 +232,13 @@ export const KanbanBoard: FunctionComponent<KanbanBoardProps> = ({
                                   boxShadow: draggableSnapshot.isDragging
                                     ? 4
                                     : 0,
+                                  cursor: "pointer",
                                 }}
-                                onClick={() => setSelectedItem(item)}
+                                onClick={() =>
+                                  navigate(
+                                    `/boards/${board.id}/items/${item.id}`,
+                                  )
+                                }
                               >
                                 <CardContent
                                   sx={{ py: 1.5, "&:last-child": { pb: 1.5 } }}
@@ -266,19 +261,6 @@ export const KanbanBoard: FunctionComponent<KanbanBoardProps> = ({
           })}
         </Box>
       </DragDropContext>
-
-      {selectedItem ? (
-        <KanbanItemDialog
-          boardId={board.id}
-          item={
-            board.items.find((entry) => entry.id === selectedItem.id) ??
-            selectedItem
-          }
-          open={Boolean(selectedItem)}
-          onClose={() => setSelectedItem(null)}
-          onBoardUpdated={handleBoardUpdated}
-        />
-      ) : null}
     </>
   );
 };

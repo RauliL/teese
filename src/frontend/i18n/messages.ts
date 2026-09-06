@@ -26,6 +26,7 @@ const rawMessages = defineMessages({
   "nav.createUser": { defaultMessage: "Create user" },
   "nav.kanbanView": { defaultMessage: "Kanban view" },
   "nav.backToBoards": { defaultMessage: "Back to boards" },
+  "nav.backToBoard": { defaultMessage: "Back to board" },
   "nav.backToUsers": { defaultMessage: "Back to users" },
 
   "kanban.noBoardsAccess": {
@@ -51,6 +52,7 @@ const rawMessages = defineMessages({
   "item.history": { defaultMessage: "History" },
   "item.addComment": { defaultMessage: "Add comment" },
   "item.delete": { defaultMessage: "Delete" },
+  "item.cancel": { defaultMessage: "Cancel" },
   "item.close": { defaultMessage: "Close" },
   "item.save": { defaultMessage: "Save" },
   "item.historyStatusUpdate": {
@@ -63,6 +65,7 @@ const rawMessages = defineMessages({
   "item.updateFailed": { defaultMessage: "Could not update item." },
   "item.deleteFailed": { defaultMessage: "Could not delete item." },
   "item.addCommentFailed": { defaultMessage: "Could not add comment." },
+  "item.notFound": { defaultMessage: "Item not found." },
 
   "board.name": { defaultMessage: "Board name" },
   "board.allowedUsers": { defaultMessage: "Allowed users" },

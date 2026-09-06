@@ -21,6 +21,7 @@ export const idMessages: Record<MessageKey, string> = {
   "nav.createUser": "Buat pengguna",
   "nav.kanbanView": "Tampilan kanban",
   "nav.backToBoards": "Kembali ke papan",
+  "nav.backToBoard": "Kembali ke papan",
   "nav.backToUsers": "Kembali ke pengguna",
 
   "kanban.noBoardsAccess": "Anda belum memiliki akses ke papan mana pun.",
@@ -42,6 +43,7 @@ export const idMessages: Record<MessageKey, string> = {
   "item.history": "Riwayat",
   "item.addComment": "Tambah komentar",
   "item.delete": "Hapus",
+  "item.cancel": "Batal",
   "item.close": "Tutup",
   "item.save": "Simpan",
   "item.historyStatusUpdate": "{username} → {status}",
@@ -50,6 +52,7 @@ export const idMessages: Record<MessageKey, string> = {
   "item.updateFailed": "Tidak dapat memperbarui kartu.",
   "item.deleteFailed": "Tidak dapat menghapus kartu.",
   "item.addCommentFailed": "Tidak dapat menambahkan komentar.",
+  "item.notFound": "Kartu tidak ditemukan.",
 
   "board.name": "Nama papan",
   "board.allowedUsers": "Pengguna yang diizinkan",

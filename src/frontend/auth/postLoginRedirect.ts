@@ -15,9 +15,7 @@ export const clearPostLoginRedirect = (): void => {
   localStorage.removeItem(POST_LOGIN_REDIRECT_KEY);
 };
 
-export const resolvePostLoginRedirect = (
-  fallbackPath?: string,
-): string => {
+export const resolvePostLoginRedirect = (fallbackPath?: string): string => {
   const storedPath = localStorage.getItem(POST_LOGIN_REDIRECT_KEY);
   if (storedPath && isValidRedirectPath(storedPath)) {
     localStorage.removeItem(POST_LOGIN_REDIRECT_KEY);

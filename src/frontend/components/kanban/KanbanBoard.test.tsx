@@ -13,6 +13,16 @@ vi.mock("../../api/myBoards.js", () => ({
   updateItem: vi.fn(),
 }));
 
+const mockNavigate = vi.fn();
+
+vi.mock("react-router-dom", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("react-router-dom")>();
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
+
 const mockCreateItem = vi.mocked(myBoardsApi.createItem);
 const mockUpdateItem = vi.mocked(myBoardsApi.updateItem);
 
@@ -21,6 +31,7 @@ describe("KanbanBoard", () => {
 
   beforeEach(() => {
     onBoardUpdated.mockReset();
+    mockNavigate.mockReset();
     mockCreateItem.mockReset();
     mockUpdateItem.mockReset();
   });
@@ -98,10 +109,10 @@ describe("KanbanBoard", () => {
     expect(await screen.findByText("Create failed")).toBeInTheDocument();
   });
 
-  it("opens the item dialog when an item is clicked", async () => {
+  it("opens the item page when an item is clicked", async () => {
     const user = userEvent.setup();
     const board = mockBoard({
-      items: [mockItem({ title: "Open me" })],
+      items: [mockItem({ id: "item-1", title: "Open me" })],
     });
 
     renderWithProviders(
@@ -110,9 +121,6 @@ describe("KanbanBoard", () => {
 
     await user.click(screen.getByText("Open me"));
 
-    expect(
-      await screen.findByRole("dialog", { name: "Item details" }),
-    ).toBeInTheDocument();
-    expect(screen.getByDisplayValue("Open me")).toBeInTheDocument();
+    expect(mockNavigate).toHaveBeenCalledWith("/boards/board-1/items/item-1");
   });
 });

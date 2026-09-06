@@ -69,8 +69,7 @@ export const KanbanPage: FunctionComponent = () => {
     );
   }
 
-  const selectedBoard =
-    boards.find((board) => board.id === boardId) ?? null;
+  const selectedBoard = boards.find((board) => board.id === boardId) ?? null;
   const boardNotFound =
     Boolean(boardId) && !loading && boards.length > 0 && !selectedBoard;
 

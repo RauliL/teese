@@ -10,6 +10,7 @@ import { CreateUserPage } from "./pages/admin/CreateUserPage.js";
 import { DashboardPage } from "./pages/admin/DashboardPage.js";
 import { UsersPage } from "./pages/admin/UsersPage.js";
 import { KanbanPage } from "./pages/KanbanPage.js";
+import { KanbanItemPage } from "./pages/KanbanItemPage.js";
 import { LoginPage } from "./pages/LoginPage.js";
 import { RequireAdmin } from "./routes/RequireAdmin.js";
 import { RequireAuth } from "./routes/RequireAuth.js";
@@ -29,6 +30,14 @@ export const App: FunctionComponent = () => {
         element={
           <RequireAuth>
             <KanbanPage />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/boards/:boardId/items/:itemId"
+        element={
+          <RequireAuth>
+            <KanbanItemPage />
           </RequireAuth>
         }
       />

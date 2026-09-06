@@ -21,6 +21,7 @@ export const fiMessages: Record<MessageKey, string> = {
   "nav.createUser": "Luo käyttäjä",
   "nav.kanbanView": "Kanban-näkymä",
   "nav.backToBoards": "Takaisin tauluihin",
+  "nav.backToBoard": "Takaisin tauluun",
   "nav.backToUsers": "Takaisin käyttäjiin",
 
   "kanban.noBoardsAccess": "Sinulla ei ole vielä pääsyä yhteenkään tauluun.",
@@ -42,6 +43,7 @@ export const fiMessages: Record<MessageKey, string> = {
   "item.history": "Historia",
   "item.addComment": "Lisää kommentti",
   "item.delete": "Poista",
+  "item.cancel": "Peruuta",
   "item.close": "Sulje",
   "item.save": "Tallenna",
   "item.historyStatusUpdate": "{username} → {status}",
@@ -50,6 +52,7 @@ export const fiMessages: Record<MessageKey, string> = {
   "item.updateFailed": "Korttia ei voitu päivittää.",
   "item.deleteFailed": "Korttia ei voitu poistaa.",
   "item.addCommentFailed": "Kommenttia ei voitu lisätä.",
+  "item.notFound": "Korttia ei löytynyt.",
 
   "board.name": "Taulun nimi",
   "board.allowedUsers": "Sallitut käyttäjät",
