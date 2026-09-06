@@ -15,6 +15,8 @@ has been implemented with [React] and [Material UI].
 
 ## Installation
 
+### From source
+
 Clone this repository, then install dependencies:
 
 ```bash
@@ -28,6 +30,17 @@ For a production build of the UI and server bundle:
 ```bash
 npm run build
 ```
+
+### From npm
+
+Install the package and production dependencies only:
+
+```bash
+npm install teese
+```
+
+The published package includes the prebuilt `dist/` output; you do not need TypeScript
+sources or a local build step to run the server.
 
 ## First use
 
@@ -78,9 +91,13 @@ credentials, then:
 
 ### Production
 
+From a source checkout, build first:
+
 ```bash
 npm run build
 npm start
 ```
+
+When installed from npm, `npm start` runs the prebuilt server directly.
 
 The server listens on port `3000` unless you override it with `PORT`.

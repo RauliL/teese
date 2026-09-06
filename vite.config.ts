@@ -9,6 +9,7 @@ export default defineConfig({
       entry: "./src/backend/index.ts",
       port: 3000,
       serverType: "express",
+      buildServer: false,
     }),
   ],
   resolve: {
