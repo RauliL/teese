@@ -7,7 +7,6 @@ import authRouter from "./routes/auth.js";
 import boardsRouter from "./routes/boards.js";
 import myBoardsRouter from "./routes/my-boards.js";
 import usersRouter from "./routes/users.js";
-import { bootstrapAdminIfNeeded } from "./users.js";
 
 const app = express();
 
@@ -22,8 +21,6 @@ const publicDir = path.resolve(import.meta.dirname, "../../public");
 if (!fs.existsSync(path.join(import.meta.dirname, "client"))) {
   app.use(express.static(publicDir));
 }
-
-await bootstrapAdminIfNeeded();
 
 app.use("/api/auth", authRouter);
 app.use("/api/my/boards", requireAuth, myBoardsRouter);

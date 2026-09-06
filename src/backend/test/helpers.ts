@@ -12,8 +12,6 @@ export async function setupBackendTest(): Promise<TestContext> {
   vi.resetModules();
 
   process.env.NODE_ENV = "test";
-  delete process.env.TEESE_ADMIN_USERNAME;
-  delete process.env.TEESE_ADMIN_PASSWORD;
 
   const [{ default: app }, { createUser }] = await Promise.all([
     import("../index.js"),

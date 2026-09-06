@@ -111,22 +111,6 @@ export async function deleteUser(username: string): Promise<void> {
   await storage.delete(USERS_NAMESPACE, username);
 }
 
-export async function bootstrapAdminIfNeeded(): Promise<void> {
-  const username = process.env.TEESE_ADMIN_USERNAME;
-  const password = process.env.TEESE_ADMIN_PASSWORD;
-
-  if (!username || !password) {
-    return;
-  }
-
-  if (await storage.has(USERS_NAMESPACE, username)) {
-    return;
-  }
-
-  await createUser({ username, password, isAdmin: true });
-  console.log(`Created admin user "${username}" from environment variables.`);
-}
-
 export class UserValidationError extends Error {
   constructor(message: string) {
     super(message);
