@@ -3,12 +3,10 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import React, { FunctionComponent } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { resolvePostLoginRedirect } from "../auth/postLoginRedirect.js";
 import { LoadingScreen } from "../components/LoadingScreen.js";
 import { LoginForm } from "../components/LoginForm.js";
 import { useAuth } from "../context/AuthContext.js";
-
-const getRedirectPath = (from: string | undefined): string =>
-  from && from !== "/login" ? from : "/";
 
 export const LoginPage: FunctionComponent = () => {
   const { user, loading } = useAuth();
@@ -21,7 +19,7 @@ export const LoginPage: FunctionComponent = () => {
   }
 
   if (user) {
-    return <Navigate to={getRedirectPath(from)} replace />;
+    return <Navigate to={resolvePostLoginRedirect(from)} replace />;
   }
 
   return (

@@ -6,6 +6,7 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 import React, { FunctionComponent, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import type { Board } from "../../types.js";
 import * as myBoardsApi from "../api/myBoards.js";
 import { ApiError } from "../api/client.js";
@@ -15,8 +16,9 @@ import { AppLayout } from "../layouts/AppLayout.js";
 
 export const KanbanPage: FunctionComponent = () => {
   const { t } = useMessages();
+  const { boardId } = useParams<{ boardId?: string }>();
+  const navigate = useNavigate();
   const [boards, setBoards] = useState<Board[]>([]);
-  const [selectedBoardId, setSelectedBoardId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -28,16 +30,6 @@ export const KanbanPage: FunctionComponent = () => {
         const response = await myBoardsApi.listMyBoards();
         if (!cancelled) {
           setBoards(response.boards);
-          setSelectedBoardId((current) => {
-            if (
-              current &&
-              response.boards.some((board) => board.id === current)
-            ) {
-              return current;
-            }
-
-            return response.boards[0]?.id ?? null;
-          });
         }
       } catch (err) {
         if (!cancelled) {
@@ -61,6 +53,14 @@ export const KanbanPage: FunctionComponent = () => {
     };
   }, [t]);
 
+  useEffect(() => {
+    if (loading || boards.length === 0 || boardId) {
+      return;
+    }
+
+    navigate(`/boards/${boards[0].id}`, { replace: true });
+  }, [boardId, boards, loading, navigate]);
+
   function handleBoardUpdated(updatedBoard: Board) {
     setBoards((current) =>
       current.map((board) =>
@@ -70,7 +70,9 @@ export const KanbanPage: FunctionComponent = () => {
   }
 
   const selectedBoard =
-    boards.find((board) => board.id === selectedBoardId) ?? null;
+    boards.find((board) => board.id === boardId) ?? null;
+  const boardNotFound =
+    Boolean(boardId) && !loading && boards.length > 0 && !selectedBoard;
 
   return (
     <AppLayout>
@@ -92,8 +94,10 @@ export const KanbanPage: FunctionComponent = () => {
       ) : (
         <>
           <Tabs
-            value={selectedBoardId ?? false}
-            onChange={(_event, boardId: string) => setSelectedBoardId(boardId)}
+            value={selectedBoard?.id ?? false}
+            onChange={(_event, nextBoardId: string) =>
+              navigate(`/boards/${nextBoardId}`)
+            }
             variant="scrollable"
             scrollButtons="auto"
             sx={{ mb: 3, borderBottom: 1, borderColor: "divider" }}
@@ -102,6 +106,11 @@ export const KanbanPage: FunctionComponent = () => {
               <Tab key={board.id} value={board.id} label={board.name} />
             ))}
           </Tabs>
+          {boardNotFound ? (
+            <Alert severity="warning" sx={{ mb: 3 }}>
+              {t("board.notFound")}
+            </Alert>
+          ) : null}
           {selectedBoard ? (
             <KanbanBoard
               board={selectedBoard}

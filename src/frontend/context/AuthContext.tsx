@@ -10,6 +10,7 @@ import React, {
 } from "react";
 import type { LoginRequest, PublicUser } from "../../types.js";
 import * as authApi from "../api/auth.js";
+import { clearPostLoginRedirect } from "../auth/postLoginRedirect.js";
 import { ApiError, getStoredToken, setStoredToken } from "../api/client.js";
 import { useMessages } from "../i18n/useMessages.js";
 
@@ -83,6 +84,7 @@ export const AuthProvider: FunctionComponent<{ children: ReactNode }> = ({
     setStoredToken(null);
     setUser(null);
     setError(null);
+    clearPostLoginRedirect();
   }, []);
 
   const clearError = useCallback(() => {

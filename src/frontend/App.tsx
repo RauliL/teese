@@ -33,6 +33,14 @@ export const App: FunctionComponent = () => {
         }
       />
       <Route
+        path="/boards/:boardId"
+        element={
+          <RequireAuth>
+            <KanbanPage />
+          </RequireAuth>
+        }
+      />
+      <Route
         path="/admin"
         element={
           <RequireAuth>
