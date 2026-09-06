@@ -1,34 +1,110 @@
-# Teese
+# Teese [![github-url][github-image]][github-url] [![coveralls][coveralls-image]][coveralls-url] [![npm][npm-image]][npm-url]
 
-Minimal [Kanban board] Web application. Uses [Varasto] as storage, while UI has
-been implemented with [React] and [Material UI].
+[github-image]: https://github.com/RauliL/teese/actions/workflows/build.yml/badge.svg
+[github-url]: https://github.com/RauliL/teese/actions/workflows/build.yml
+[coveralls-image]: https://coveralls.io/repos/github/RauliL/teese/badge.svg
+[coveralls-url]: https://coveralls.io/github/RauliL/teese
+[npm-image]: https://img.shields.io/npm/v/teese.svg
+[npm-url]: https://npmjs.org/package/teese
+
+Minimal [Kanban board] Web application. Uses [Varasto] as storage, while the UI
+has been implemented with [React] and [Material UI].
 
 [kanban board]: https://en.wikipedia.org/wiki/Kanban_board
 [varasto]: https://github.com/RauliL/varasto
 [react]: https://reactjs.org
-[material ui]: https://material-ui.com
+[material ui]: https://mui.com
 
 ## Requirements
 
-- Node.js>=12
+- [Node.js](https://nodejs.org/) 22 or newer
+- npm or [Yarn](https://yarnpkg.com/) (a `yarn.lock` is included)
 
 ## Installation
 
-Clone this Git repository somewhere, then install dependencies and build static
-assets and other TypeScript'y stuff:
+### From source
+
+Clone this repository, then install dependencies:
 
 ```bash
-$ npm install
-$ npm run build
+git clone https://github.com/RauliL/teese.git
+cd teese
+npm install
 ```
+
+For a production build of the UI and server bundle:
+
+```bash
+npm run build
+```
+
+### From npm
+
+Install the package and production dependencies only:
+
+```bash
+npm install teese
+```
+
+The published package includes the prebuilt `dist/` output; you do not need TypeScript
+sources or a local build step to run the server.
+
+## First use
+
+Teese stores users and boards as JSON files under `./data` by default. On a fresh
+install there are no accounts yet, so run the interactive setup script:
+
+```bash
+npm run init
+```
+
+With Yarn, use `yarn run init` or `yarn initialize` (bare `yarn init` is Yarn's own command).
+
+You will be prompted for:
+
+- **Admin username** (default: `admin`)
+- **Admin password** (at least 8 characters)
+- **Initial board name** (default: `My board`)
+
+The script creates the administrator account and your first board. It can only
+be run while no users exist yet.
+
+Recommended for any real deployment:
+
+| Variable         | Default                 | Purpose                                                          |
+| ---------------- | ----------------------- | ---------------------------------------------------------------- |
+| `JWT_SECRET`     | development placeholder | Secret used to sign authentication tokens                        |
+| `JWT_EXPIRES_IN` | `30d`                   | Token lifetime (passed to [jose](https://github.com/panva/jose)) |
+| `TEESE_DATA`     | `./data`                | Directory for Varasto JSON storage                               |
+| `PORT`           | `3000`                  | HTTP listen port                                                 |
 
 ## Usage
 
-After installation, you can start the application with:
+### Development
 
 ```bash
-$ npm start
+npm run init
+npm run start:dev
 ```
 
-Which starts the backend HTTP server in port `3000`. You can change the default
-port with `PORT` environment.
+Open [http://localhost:3000](http://localhost:3000), sign in with the admin
+credentials, then:
+
+1. Open **Admin** and create any additional users under **Users**.
+2. Create a board under **Manage boards** and add users to its allowed list.
+3. Open the kanban view from the home page to work on items, comments, and
+   status changes.
+
+### Production
+
+From a source checkout, initialize and build first:
+
+```bash
+npm run init
+npm run build
+npm start
+```
+
+When installed from npm, `npm start` runs the prebuilt server directly.
+
+The server listens on port `3000` unless you override it with `PORT`.

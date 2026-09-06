@@ -1,7 +1,6 @@
-/.vscode
+/coverage
 /data
-/lib
+/dist
 /node_modules
-/public/static
 *.log
 *.tgz

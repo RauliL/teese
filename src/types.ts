@@ -1,19 +1,108 @@
+export type User = {
+  username: string;
+  passwordHash: string;
+  isAdmin: boolean;
+};
+
+export type PublicUser = {
+  username: string;
+  isAdmin: boolean;
+};
+
+export type AuthTokenPayload = {
+  sub: string;
+  isAdmin: boolean;
+};
+
+export type LoginRequest = {
+  username: string;
+  password: string;
+};
+
+export type LoginResponse = {
+  token: string;
+  user: PublicUser;
+};
+
+export type CreateUserRequest = {
+  username: string;
+  password: string;
+  isAdmin?: boolean;
+};
+
 export enum ItemStatus {
-  TODO = 0,
-  IN_PROGRESS = 1,
-  DONE = 2,
+  ToDo = "todo",
+  InProgress = "in_progress",
+  Done = "done",
 }
 
-export enum ItemPriority {
-  HIGH = 1,
-  NORMAL = 0,
-  LOW = -1,
-}
+export const ITEM_STATUSES = Object.values(ItemStatus);
+
+export type StatusUpdateHistoryEntry = {
+  id: string;
+  type: "status_update";
+  createdAt: string;
+  username: string;
+  status: ItemStatus;
+};
+
+export type CommentHistoryEntry = {
+  id: string;
+  type: "comment";
+  createdAt: string;
+  username: string;
+  text: string;
+};
+
+export type HistoryEntry = StatusUpdateHistoryEntry | CommentHistoryEntry;
 
 export type Item = {
-  createdOn: string;
+  id: string;
   title: string;
-  text: string;
+  createdAt: string;
   status: ItemStatus;
-  priority: ItemPriority;
+  history: HistoryEntry[];
+};
+
+export const OPEN_FOR_EVERYONE_USERNAME = "*";
+
+export type Board = {
+  id: string;
+  name: string;
+  createdAt: string;
+  allowedUsers: string[];
+  items: Item[];
+};
+
+export type BoardSummary = {
+  id: string;
+  name: string;
+  createdAt: string;
+  itemCount: number;
+  allowedUserCount: number;
+  openForEveryone: boolean;
+};
+
+export type CreateBoardRequest = {
+  name: string;
+  allowedUsers?: string[];
+};
+
+export type UpdateBoardRequest = {
+  name?: string;
+  allowedUsers?: string[];
+};
+
+export type CreateItemRequest = {
+  title: string;
+  status?: ItemStatus;
+};
+
+export type UpdateItemRequest = {
+  title?: string;
+  status?: ItemStatus;
+};
+
+export type CreateCommentRequest = {
+  text: string;
 };
