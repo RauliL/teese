@@ -129,6 +129,35 @@ describe("my-boards API", () => {
       expect(deleteItemResponse.body.board.items).toEqual([]);
     });
 
+    it("deletes all done items in bulk", async () => {
+      const createTodoResponse = await withAuth(context.app, userToken)
+        .post(`/api/my/boards/${boardId}/items`)
+        .send({ title: "Todo task" });
+      const todoItemId = createTodoResponse.body.board.items[0].id as string;
+
+      const createDoneResponse = await withAuth(context.app, userToken)
+        .post(`/api/my/boards/${boardId}/items`)
+        .send({ title: "Done task", status: ItemStatus.Done });
+      const doneItemId = createDoneResponse.body.board.items.find(
+        (item: { id: string; status: ItemStatus }) =>
+          item.status === ItemStatus.Done,
+      ).id as string;
+
+      const deleteDoneResponse = await withAuth(context.app, userToken).delete(
+        `/api/my/boards/${boardId}/items/done`,
+      );
+
+      expect(deleteDoneResponse.status).toBe(200);
+      expect(deleteDoneResponse.body.board.items).toEqual([
+        expect.objectContaining({ id: todoItemId, status: ItemStatus.ToDo }),
+      ]);
+      expect(
+        deleteDoneResponse.body.board.items.some(
+          (item: { id: string }) => item.id === doneItemId,
+        ),
+      ).toBe(false);
+    });
+
     it("returns 403 when modifying items on an inaccessible board", async () => {
       const privateBoardResponse = await withAuth(context.app, adminToken)
         .post("/api/boards")

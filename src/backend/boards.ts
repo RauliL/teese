@@ -254,6 +254,15 @@ export async function deleteItemWithAccess(
   return deleteItem(boardId, itemId);
 }
 
+export async function deleteDoneItemsWithAccess(
+  boardId: string,
+  username: string,
+  isAdmin: boolean,
+): Promise<Board> {
+  await getAccessibleBoard(boardId, username, isAdmin);
+  return deleteDoneItems(boardId);
+}
+
 export async function addItemCommentWithAccess(
   boardId: string,
   itemId: string,
@@ -395,6 +404,13 @@ export async function deleteItem(
   }
 
   board.items.splice(itemIndex, 1);
+  await storage.set(BOARDS_NAMESPACE, boardId, board);
+  return board;
+}
+
+export async function deleteDoneItems(boardId: string): Promise<Board> {
+  const board = await getBoardOrThrow(boardId);
+  board.items = board.items.filter((item) => item.status !== ItemStatus.Done);
   await storage.set(BOARDS_NAMESPACE, boardId, board);
   return board;
 }

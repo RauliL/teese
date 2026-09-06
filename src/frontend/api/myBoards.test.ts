@@ -3,6 +3,7 @@ import { ItemStatus, type Board } from "../../types.js";
 import {
   addItemComment,
   createItem,
+  deleteDoneItems,
   deleteItem,
   getMyBoard,
   listMyBoards,
@@ -130,6 +131,22 @@ describe("myBoards API", () => {
       await expect(deleteItem("board-1", "item-1")).resolves.toEqual(response);
       expect(fetchMock).toHaveBeenCalledWith(
         "/api/my/boards/board-1/items/item-1",
+        {
+          method: "DELETE",
+          headers: expect.any(Headers),
+        },
+      );
+    });
+  });
+
+  describe("deleteDoneItems", () => {
+    it("deletes all done items from a board", async () => {
+      const response = { board: { ...mockBoard, items: [] } };
+      fetchMock = mockFetch(response);
+
+      await expect(deleteDoneItems("board-1")).resolves.toEqual(response);
+      expect(fetchMock).toHaveBeenCalledWith(
+        "/api/my/boards/board-1/items/done",
         {
           method: "DELETE",
           headers: expect.any(Headers),

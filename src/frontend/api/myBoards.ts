@@ -39,6 +39,11 @@ export const deleteItem = (
     method: "DELETE",
   });
 
+export const deleteDoneItems = (boardId: string): Promise<{ board: Board }> =>
+  apiFetch<{ board: Board }>(`/api/my/boards/${boardId}/items/done`, {
+    method: "DELETE",
+  });
+
 export const addItemComment = (
   boardId: string,
   itemId: string,

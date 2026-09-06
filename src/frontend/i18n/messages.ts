@@ -41,6 +41,14 @@ const rawMessages = defineMessages({
   "kanban.itemCount": {
     defaultMessage: "{count, plural, one {# item} other {# items}}",
   },
+  "kanban.deleteDone": { defaultMessage: "Delete all done" },
+  "kanban.deleteDoneConfirm": {
+    defaultMessage:
+      "{count, plural, one {Delete # done item?} other {Delete all # done items?}}",
+  },
+  "kanban.deleteDoneFailed": {
+    defaultMessage: "Could not delete done items.",
+  },
 
   "itemStatus.todo": { defaultMessage: "ToDo" },
   "itemStatus.inProgress": { defaultMessage: "In Progress" },

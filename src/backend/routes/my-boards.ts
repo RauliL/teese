@@ -10,6 +10,7 @@ import {
   BoardNotFoundError,
   BoardValidationError,
   createItemWithAccess,
+  deleteDoneItemsWithAccess,
   deleteItemWithAccess,
   getAccessibleBoard,
   ItemNotFoundError,
@@ -101,6 +102,25 @@ router.patch("/:boardId/items/:itemId", async (req, res) => {
       req.params.boardId,
       req.params.itemId,
       body,
+      username,
+      isAdmin,
+    );
+    res.json({ board });
+  } catch (error) {
+    if (handleBoardError(error, res)) {
+      return;
+    }
+
+    throw error;
+  }
+});
+
+router.delete("/:boardId/items/done", async (req, res) => {
+  const { username, isAdmin } = (req as AuthenticatedRequest).user;
+
+  try {
+    const board = await deleteDoneItemsWithAccess(
+      req.params.boardId,
       username,
       isAdmin,
     );

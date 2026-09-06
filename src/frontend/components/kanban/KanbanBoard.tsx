@@ -63,6 +63,38 @@ export const KanbanBoard: FunctionComponent<KanbanBoardProps> = ({
     }
   }
 
+  async function handleDeleteDoneItems() {
+    const doneItems = itemsForStatus(board, ItemStatusEnum.Done);
+
+    if (doneItems.length === 0) {
+      return;
+    }
+
+    if (
+      !window.confirm(
+        t("kanban.deleteDoneConfirm", { count: doneItems.length }),
+      )
+    ) {
+      return;
+    }
+
+    setError(null);
+    setSubmitting(true);
+
+    try {
+      const { board: updatedBoard } = await myBoardsApi.deleteDoneItems(
+        board.id,
+      );
+      onBoardUpdated(updatedBoard);
+    } catch (err) {
+      setError(
+        err instanceof ApiError ? err.message : t("kanban.deleteDoneFailed"),
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   async function handleDragEnd(result: DropResult) {
     const { destination, source, draggableId } = result;
 
@@ -196,6 +228,17 @@ export const KanbanBoard: FunctionComponent<KanbanBoardProps> = ({
                     >
                       {t("kanban.itemCount", { count: items.length })}
                     </Typography>
+                    {status === ItemStatusEnum.Done && items.length > 0 ? (
+                      <Button
+                        color="error"
+                        size="small"
+                        onClick={() => void handleDeleteDoneItems()}
+                        disabled={submitting || Boolean(movingItemId)}
+                        sx={{ mb: 2 }}
+                      >
+                        {t("kanban.deleteDone")}
+                      </Button>
+                    ) : null}
                     <Box
                       ref={provided.innerRef}
                       {...provided.droppableProps}

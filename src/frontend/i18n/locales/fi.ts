@@ -32,6 +32,10 @@ export const fiMessages: Record<MessageKey, string> = {
   "kanban.createItemFailed": "Korttia ei voitu luoda.",
   "kanban.moveItemFailed": "Korttia ei voitu siirtää.",
   "kanban.itemCount": "{count, plural, one {# kortti} other {# korttia}}",
+  "kanban.deleteDone": "Poista kaikki valmiit",
+  "kanban.deleteDoneConfirm":
+    "{count, plural, one {Poistetaanko # valmis kortti?} other {Poistetaanko kaikki # valmista korttia?}}",
+  "kanban.deleteDoneFailed": "Valmiita kortteja ei voitu poistaa.",
 
   "itemStatus.todo": "Tehtävä",
   "itemStatus.inProgress": "Käynnissä",

@@ -32,6 +32,10 @@ export const idMessages: Record<MessageKey, string> = {
   "kanban.createItemFailed": "Tidak dapat membuat kartu.",
   "kanban.moveItemFailed": "Tidak dapat memindahkan kartu.",
   "kanban.itemCount": "{count, plural, other {# kartu}}",
+  "kanban.deleteDone": "Hapus semua selesai",
+  "kanban.deleteDoneConfirm":
+    "{count, plural, other {Hapus semua # kartu selesai?}}",
+  "kanban.deleteDoneFailed": "Tidak dapat menghapus kartu selesai.",
 
   "itemStatus.todo": "ToDo",
   "itemStatus.inProgress": "Sedang dikerjakan",
