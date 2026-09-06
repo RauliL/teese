@@ -9,7 +9,11 @@ import { bootstrapAdminIfNeeded } from "./users.js";
 
 const app = express();
 
-app.use(morgan("combined"));
+// Only setup logging when not running test cases.
+if (process.env.NODE_ENV !== "test") {
+  app.use(morgan("combined"));
+}
+
 app.use(express.json());
 
 await bootstrapAdminIfNeeded();

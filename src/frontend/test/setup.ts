@@ -6,7 +6,7 @@ afterEach(() => {
   cleanup();
 });
 
-if (!document.doctype) {
+if (typeof document !== "undefined" && !document.doctype) {
   document.insertBefore(
     document.implementation.createDocumentType("html", "", ""),
     document.firstChild,
