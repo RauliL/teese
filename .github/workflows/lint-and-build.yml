@@ -23,3 +23,11 @@ jobs:
         run: yarn lint
       - name: Build the entire project
         run: yarn build
+      - name: Run tests
+        run: yarn test --coverage
+      - name: Send test coverage to Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          flag-name: ${{ matrix.node-version }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel: true
