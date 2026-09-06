@@ -69,7 +69,7 @@ Recommended for any real deployment:
 | Variable         | Default                 | Purpose                                                          |
 | ---------------- | ----------------------- | ---------------------------------------------------------------- |
 | `JWT_SECRET`     | development placeholder | Secret used to sign authentication tokens                        |
-| `JWT_EXPIRES_IN` | `7d`                    | Token lifetime (passed to [jose](https://github.com/panva/jose)) |
+| `JWT_EXPIRES_IN` | `30d`                   | Token lifetime (passed to [jose](https://github.com/panva/jose)) |
 | `TEESE_DATA`     | `./data`                | Directory for Varasto JSON storage                               |
 | `PORT`           | `3000`                  | HTTP listen port                                                 |
 
