@@ -5,14 +5,14 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, FunctionComponent, useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import * as boardsApi from "../../api/boards.js";
 import { ApiError } from "../../api/client.js";
 import { BoardAllowedUsersField } from "../../components/BoardAllowedUsersField.js";
 import { useMessages } from "../../i18n/useMessages.js";
 
-export function CreateBoardPage() {
+export const CreateBoardPage: FunctionComponent = () => {
   const { t } = useMessages();
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -80,4 +80,4 @@ export function CreateBoardPage() {
       </Paper>
     </>
   );
-}
+};

@@ -15,7 +15,12 @@ import Select from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, {
+  FormEvent,
+  FunctionComponent,
+  useEffect,
+  useState,
+} from "react";
 import type { Board, Item, ItemStatus } from "../../../types.js";
 import { ITEM_STATUSES } from "../../../types.js";
 import * as myBoardsApi from "../../api/myBoards.js";
@@ -32,13 +37,13 @@ type KanbanItemDialogProps = {
   onBoardUpdated: (board: Board) => void;
 };
 
-export function KanbanItemDialog({
+export const KanbanItemDialog: FunctionComponent<KanbanItemDialogProps> = ({
   boardId,
   item,
   open,
   onClose,
   onBoardUpdated,
-}: KanbanItemDialogProps) {
+}) => {
   const { t, itemStatusLabel, formatDescriptor } = useMessages();
   const [title, setTitle] = useState(item.title);
   const [status, setStatus] = useState<ItemStatus>(item.status);
@@ -223,4 +228,4 @@ export function KanbanItemDialog({
       </DialogActions>
     </Dialog>
   );
-}
+};

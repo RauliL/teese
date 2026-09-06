@@ -6,13 +6,13 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, FunctionComponent, useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import * as authApi from "../../api/auth.js";
 import { ApiError } from "../../api/client.js";
 import { useMessages } from "../../i18n/useMessages.js";
 
-export function CreateUserPage() {
+export const CreateUserPage: FunctionComponent = () => {
   const { t } = useMessages();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -106,4 +106,4 @@ export function CreateUserPage() {
       </Paper>
     </>
   );
-}
+};

@@ -5,7 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
 import type { PublicUser } from "../../../types.js";
 import * as authApi from "../../api/auth.js";
 import * as boardsApi from "../../api/boards.js";
@@ -13,7 +13,7 @@ import { ApiError } from "../../api/client.js";
 import { useMessages } from "../../i18n/useMessages.js";
 import type { MessageKey } from "../../i18n/messages.js";
 
-export function DashboardPage() {
+export const DashboardPage: FunctionComponent = () => {
   const { t } = useMessages();
   const [users, setUsers] = useState<PublicUser[]>([]);
   const [boardCount, setBoardCount] = useState(0);
@@ -99,4 +99,4 @@ export function DashboardPage() {
       )}
     </>
   );
-}
+};

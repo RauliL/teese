@@ -1,9 +1,11 @@
-import React, { useMemo } from "react";
+import React, { FunctionComponent, ReactNode, useMemo } from "react";
 import { IntlProvider } from "react-intl";
 import { getAppLocale } from "./locale.js";
 import { getMessagesForLocale } from "./messages.js";
 
-export function AppIntlProvider({ children }: { children: React.ReactNode }) {
+export const AppIntlProvider: FunctionComponent<{ children: ReactNode }> = ({
+  children,
+}) => {
   const locale = useMemo(() => getAppLocale(), []);
   const messages = useMemo(() => getMessagesForLocale(locale), [locale]);
 
@@ -12,4 +14,4 @@ export function AppIntlProvider({ children }: { children: React.ReactNode }) {
       {children}
     </IntlProvider>
   );
-}
+};

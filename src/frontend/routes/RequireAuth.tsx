@@ -1,9 +1,11 @@
-import React from "react";
+import React, { FunctionComponent, ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { LoadingScreen } from "../components/LoadingScreen.js";
 import { useAuth } from "../context/AuthContext.js";
 
-export function RequireAuth({ children }: { children: React.ReactNode }) {
+export const RequireAuth: FunctionComponent<{ children: ReactNode }> = ({
+  children,
+}) => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
@@ -16,4 +18,4 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
   }
 
   return <>{children}</>;
-}
+};

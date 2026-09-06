@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, FunctionComponent, useState } from "react";
 import type { Board } from "../../../types.js";
 import * as boardsApi from "../../api/boards.js";
 import { ApiError } from "../../api/client.js";
@@ -19,11 +19,11 @@ type BoardDetailViewProps = {
   onBoardDeleted: () => void;
 };
 
-export function BoardDetailView({
+export const BoardDetailView: FunctionComponent<BoardDetailViewProps> = ({
   board,
   onBoardUpdated,
   onBoardDeleted,
-}: BoardDetailViewProps) {
+}) => {
   const { t } = useMessages();
   const [name, setName] = useState(board.name);
   const [allowedUsers, setAllowedUsers] = useState(board.allowedUsers);
@@ -112,4 +112,4 @@ export function BoardDetailView({
       ) : null}
     </Paper>
   );
-}
+};

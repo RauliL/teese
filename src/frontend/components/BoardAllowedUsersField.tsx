@@ -1,7 +1,7 @@
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import React, { useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import type { PublicUser } from "../../../types.js";
 import * as authApi from "../api/auth.js";
 import { ApiError } from "../api/client.js";
@@ -13,11 +13,9 @@ type BoardAllowedUsersFieldProps = {
   disabled?: boolean;
 };
 
-export function BoardAllowedUsersField({
-  value,
-  onChange,
-  disabled = false,
-}: BoardAllowedUsersFieldProps) {
+export const BoardAllowedUsersField: FunctionComponent<
+  BoardAllowedUsersFieldProps
+> = ({ value, onChange, disabled = false }) => {
   const { t } = useMessages();
   const [users, setUsers] = useState<PublicUser[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -72,4 +70,4 @@ export function BoardAllowedUsersField({
       ) : null}
     </>
   );
-}
+};

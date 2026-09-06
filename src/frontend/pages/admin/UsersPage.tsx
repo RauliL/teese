@@ -13,7 +13,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import React, { useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import type { PublicUser } from "../../../types.js";
 import * as authApi from "../../api/auth.js";
@@ -21,7 +21,7 @@ import { ApiError } from "../../api/client.js";
 import { useAuth } from "../../context/AuthContext.js";
 import { useMessages } from "../../i18n/useMessages.js";
 
-export function UsersPage() {
+export const UsersPage: FunctionComponent = () => {
   const { t } = useMessages();
   const { user: currentUser } = useAuth();
   const [users, setUsers] = useState<PublicUser[]>([]);
@@ -145,4 +145,4 @@ export function UsersPage() {
       )}
     </>
   );
-}
+};

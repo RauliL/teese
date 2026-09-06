@@ -12,7 +12,7 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, FunctionComponent, useState } from "react";
 import type { Board, Item, ItemStatus } from "../../../types.js";
 import { ITEM_STATUSES, ItemStatus as ItemStatusEnum } from "../../../types.js";
 import * as myBoardsApi from "../../api/myBoards.js";
@@ -25,15 +25,16 @@ type KanbanBoardProps = {
   onBoardUpdated: (board: Board) => void;
 };
 
-function itemsForStatus(board: Board, status: ItemStatus): Item[] {
-  return board.items.filter((item) => item.status === status);
-}
+const itemsForStatus = (board: Board, status: ItemStatus): Item[] =>
+  board.items.filter((item) => item.status === status);
 
-function isItemStatus(value: string): value is ItemStatus {
-  return ITEM_STATUSES.includes(value as ItemStatus);
-}
+const isItemStatus = (value: string): value is ItemStatus =>
+  ITEM_STATUSES.includes(value as ItemStatus);
 
-export function KanbanBoard({ board, onBoardUpdated }: KanbanBoardProps) {
+export const KanbanBoard: FunctionComponent<KanbanBoardProps> = ({
+  board,
+  onBoardUpdated,
+}) => {
   const { t, itemStatusLabel } = useMessages();
   const [newItemTitle, setNewItemTitle] = useState("");
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
@@ -280,4 +281,4 @@ export function KanbanBoard({ board, onBoardUpdated }: KanbanBoardProps) {
       ) : null}
     </>
   );
-}
+};

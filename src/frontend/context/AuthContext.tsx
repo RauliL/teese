@@ -1,4 +1,6 @@
 import React, {
+  FunctionComponent,
+  ReactNode,
   createContext,
   useCallback,
   useContext,
@@ -22,7 +24,9 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export const AuthProvider: FunctionComponent<{ children: ReactNode }> = ({
+  children,
+}) => {
   const { t } = useMessages();
   const [user, setUser] = useState<PublicUser | null>(null);
   const [loading, setLoading] = useState(true);
@@ -98,9 +102,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
+};
 
-export function useAuth(): AuthContextValue {
+export const useAuth = (): AuthContextValue => {
   const context = useContext(AuthContext);
 
   if (!context) {
@@ -108,4 +112,4 @@ export function useAuth(): AuthContextValue {
   }
 
   return context;
-}
+};

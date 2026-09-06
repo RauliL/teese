@@ -6,33 +6,28 @@ import type {
 } from "../../types.js";
 import { apiFetch } from "./client.js";
 
-export async function listBoards(): Promise<{ boards: BoardSummary[] }> {
-  return apiFetch<{ boards: BoardSummary[] }>("/api/boards");
-}
+export const listBoards = (): Promise<{ boards: BoardSummary[] }> =>
+  apiFetch<{ boards: BoardSummary[] }>("/api/boards");
 
-export async function getBoard(id: string): Promise<{ board: Board }> {
-  return apiFetch<{ board: Board }>(`/api/boards/${id}`);
-}
+export const getBoard = (id: string): Promise<{ board: Board }> =>
+  apiFetch<{ board: Board }>(`/api/boards/${id}`);
 
-export async function createBoard(
+export const createBoard = (
   request: CreateBoardRequest,
-): Promise<{ board: Board }> {
-  return apiFetch<{ board: Board }>("/api/boards", {
+): Promise<{ board: Board }> =>
+  apiFetch<{ board: Board }>("/api/boards", {
     method: "POST",
     body: JSON.stringify(request),
   });
-}
 
-export async function updateBoard(
+export const updateBoard = (
   id: string,
   request: UpdateBoardRequest,
-): Promise<{ board: Board }> {
-  return apiFetch<{ board: Board }>(`/api/boards/${id}`, {
+): Promise<{ board: Board }> =>
+  apiFetch<{ board: Board }>(`/api/boards/${id}`, {
     method: "PATCH",
     body: JSON.stringify(request),
   });
-}
 
-export async function deleteBoard(id: string): Promise<void> {
-  await apiFetch(`/api/boards/${id}`, { method: "DELETE" });
-}
+export const deleteBoard = (id: string): Promise<void> =>
+  apiFetch(`/api/boards/${id}`, { method: "DELETE" });

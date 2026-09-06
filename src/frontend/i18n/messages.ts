@@ -139,21 +139,22 @@ export const itemStatusMessageKeys: Record<ItemStatus, MessageKey> = {
   [ItemStatus.Done]: "itemStatus.done",
 };
 
-export function getDefaultMessages(): Record<string, string> {
-  return Object.fromEntries(
+export const getDefaultMessages = (): Record<string, string> =>
+  Object.fromEntries(
     Object.entries(messages).map(([id, descriptor]) => [
       id,
       descriptor.defaultMessage ?? id,
     ]),
   );
-}
 
 const localeMessages: Record<string, Record<MessageKey, string>> = {
   fi: fiMessages,
   id: idMessages,
 };
 
-export function getMessagesForLocale(locale: string): Record<string, string> {
+export const getMessagesForLocale = (
+  locale: string,
+): Record<string, string> => {
   const defaults = getDefaultMessages();
   const translations = localeMessages[locale];
 
@@ -162,4 +163,4 @@ export function getMessagesForLocale(locale: string): Record<string, string> {
   }
 
   return { ...defaults, ...translations };
-}
+};

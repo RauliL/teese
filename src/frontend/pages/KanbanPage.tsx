@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
-import React, { useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import type { Board } from "../../types.js";
 import * as myBoardsApi from "../api/myBoards.js";
 import { ApiError } from "../api/client.js";
@@ -13,7 +13,7 @@ import { KanbanBoard } from "../components/kanban/KanbanBoard.js";
 import { useMessages } from "../i18n/useMessages.js";
 import { AppLayout } from "../layouts/AppLayout.js";
 
-export function KanbanPage() {
+export const KanbanPage: FunctionComponent = () => {
   const { t } = useMessages();
   const [boards, setBoards] = useState<Board[]>([]);
   const [selectedBoardId, setSelectedBoardId] = useState<string | null>(null);
@@ -112,4 +112,4 @@ export function KanbanPage() {
       )}
     </AppLayout>
   );
-}
+};

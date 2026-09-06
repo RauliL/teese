@@ -1,21 +1,16 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { LoadingScreen } from "../components/LoadingScreen.js";
 import { LoginForm } from "../components/LoginForm.js";
 import { useAuth } from "../context/AuthContext.js";
 
-function getRedirectPath(from: string | undefined): string {
-  if (from && from !== "/login") {
-    return from;
-  }
+const getRedirectPath = (from: string | undefined): string =>
+  from && from !== "/login" ? from : "/";
 
-  return "/";
-}
-
-export function LoginPage() {
+export const LoginPage: FunctionComponent = () => {
   const { user, loading } = useAuth();
   const location = useLocation();
   const from =
@@ -45,4 +40,4 @@ export function LoginPage() {
       </Container>
     </Box>
   );
-}
+};

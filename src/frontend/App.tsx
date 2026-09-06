@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { LoadingScreen } from "./components/LoadingScreen.js";
 import { useAuth } from "./context/AuthContext.js";
@@ -14,7 +14,7 @@ import { LoginPage } from "./pages/LoginPage.js";
 import { RequireAdmin } from "./routes/RequireAdmin.js";
 import { RequireAuth } from "./routes/RequireAuth.js";
 
-export function App() {
+export const App: FunctionComponent = () => {
   const { loading } = useAuth();
 
   if (loading) {
@@ -52,4 +52,4 @@ export function App() {
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
-}
+};

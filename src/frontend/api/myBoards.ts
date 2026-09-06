@@ -2,65 +2,52 @@ import type {
   Board,
   CreateCommentRequest,
   CreateItemRequest,
-  ItemStatus,
   UpdateItemRequest,
 } from "../../types.js";
 import { apiFetch } from "./client.js";
 
-export async function listMyBoards(): Promise<{ boards: Board[] }> {
-  return apiFetch<{ boards: Board[] }>("/api/my/boards");
-}
+export const listMyBoards = (): Promise<{ boards: Board[] }> =>
+  apiFetch<{ boards: Board[] }>("/api/my/boards");
 
-export async function getMyBoard(id: string): Promise<{ board: Board }> {
-  return apiFetch<{ board: Board }>(`/api/my/boards/${id}`);
-}
+export const getMyBoard = (id: string): Promise<{ board: Board }> =>
+  apiFetch<{ board: Board }>(`/api/my/boards/${id}`);
 
-export async function createItem(
+export const createItem = (
   boardId: string,
   request: CreateItemRequest,
-): Promise<{ board: Board }> {
-  return apiFetch<{ board: Board }>(`/api/my/boards/${boardId}/items`, {
+): Promise<{ board: Board }> =>
+  apiFetch<{ board: Board }>(`/api/my/boards/${boardId}/items`, {
     method: "POST",
     body: JSON.stringify(request),
   });
-}
 
-export async function updateItem(
+export const updateItem = (
   boardId: string,
   itemId: string,
   request: UpdateItemRequest,
-): Promise<{ board: Board }> {
-  return apiFetch<{ board: Board }>(
-    `/api/my/boards/${boardId}/items/${itemId}`,
-    {
-      method: "PATCH",
-      body: JSON.stringify(request),
-    },
-  );
-}
+): Promise<{ board: Board }> =>
+  apiFetch<{ board: Board }>(`/api/my/boards/${boardId}/items/${itemId}`, {
+    method: "PATCH",
+    body: JSON.stringify(request),
+  });
 
-export async function deleteItem(
+export const deleteItem = (
   boardId: string,
   itemId: string,
-): Promise<{ board: Board }> {
-  return apiFetch<{ board: Board }>(
-    `/api/my/boards/${boardId}/items/${itemId}`,
-    { method: "DELETE" },
-  );
-}
+): Promise<{ board: Board }> =>
+  apiFetch<{ board: Board }>(`/api/my/boards/${boardId}/items/${itemId}`, {
+    method: "DELETE",
+  });
 
-export async function addItemComment(
+export const addItemComment = (
   boardId: string,
   itemId: string,
   request: CreateCommentRequest,
-): Promise<{ board: Board }> {
-  return apiFetch<{ board: Board }>(
+): Promise<{ board: Board }> =>
+  apiFetch<{ board: Board }>(
     `/api/my/boards/${boardId}/items/${itemId}/comments`,
     {
       method: "POST",
       body: JSON.stringify(request),
     },
   );
-}
-
-export type { ItemStatus };

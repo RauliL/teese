@@ -12,7 +12,7 @@ type MessageValues = Record<
   string | number | boolean | Date | null | undefined
 >;
 
-export function useMessages() {
+export const useMessages = () => {
   const intl = useIntl();
 
   const t = useCallback(
@@ -33,4 +33,4 @@ export function useMessages() {
   );
 
   return { t, itemStatusLabel, intl, formatDescriptor };
-}
+};

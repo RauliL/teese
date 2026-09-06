@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
-import React, { useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import type { Board } from "../../../types.js";
 import * as boardsApi from "../../api/boards.js";
@@ -11,7 +11,7 @@ import { ApiError } from "../../api/client.js";
 import { useMessages } from "../../i18n/useMessages.js";
 import { BoardDetailView } from "./BoardDetailView.js";
 
-export function BoardDetailPage() {
+export const BoardDetailPage: FunctionComponent = () => {
   const { t } = useMessages();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -101,4 +101,4 @@ export function BoardDetailPage() {
       />
     </>
   );
-}
+};
