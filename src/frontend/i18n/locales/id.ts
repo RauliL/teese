@@ -59,6 +59,11 @@ export const idMessages: Record<MessageKey, string> = {
   "item.notFound": "Kartu tidak ditemukan.",
 
   "board.name": "Nama papan",
+  "board.accessPolicy": "Kebijakan akses",
+  "board.accessEveryone": "Semua orang",
+  "board.accessSelectedUsers": "Pengguna terpilih",
+  "board.accessEveryoneHelp":
+    "Semua pengguna yang terautentikasi dapat mengakses papan ini di antarmuka kanban. Administrator selalu memiliki akses.",
   "board.allowedUsers": "Pengguna yang diizinkan",
   "board.allowedUsersHelp":
     "Hanya pengguna yang dipilih yang dapat mengakses papan ini di antarmuka kanban. Administrator selalu memiliki akses.",

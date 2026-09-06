@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { FormEvent, FunctionComponent, useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { OPEN_FOR_EVERYONE_USERNAME } from "../../../types.js";
 import * as boardsApi from "../../api/boards.js";
 import { ApiError } from "../../api/client.js";
 import { BoardAllowedUsersField } from "../../components/BoardAllowedUsersField.js";
@@ -16,7 +17,9 @@ export const CreateBoardPage: FunctionComponent = () => {
   const { t } = useMessages();
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [allowedUsers, setAllowedUsers] = useState<string[]>([]);
+  const [allowedUsers, setAllowedUsers] = useState<string[]>([
+    OPEN_FOR_EVERYONE_USERNAME,
+  ]);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 

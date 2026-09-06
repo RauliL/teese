@@ -35,7 +35,7 @@ describe("my-boards API", () => {
     it("lists boards accessible to the current user", async () => {
       await withAuth(context.app, adminToken)
         .post("/api/boards")
-        .send({ name: "Admin only board" });
+        .send({ name: "Admin only board", allowedUsers: [] });
 
       const response = await withAuth(context.app, userToken).get(
         "/api/my/boards",
@@ -49,10 +49,29 @@ describe("my-boards API", () => {
       });
     });
 
+    it("lists boards open for everyone", async () => {
+      const openBoardResponse = await withAuth(context.app, adminToken)
+        .post("/api/boards")
+        .send({ name: "Open board", allowedUsers: ["*"] });
+      const openBoardId = openBoardResponse.body.board.id as string;
+
+      const response = await withAuth(context.app, userToken).get(
+        "/api/my/boards",
+      );
+
+      expect(response.status).toBe(200);
+      expect(response.body.boards).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ id: boardId, name: "Team board" }),
+          expect.objectContaining({ id: openBoardId, name: "Open board" }),
+        ]),
+      );
+    });
+
     it("returns all boards for administrators", async () => {
       await withAuth(context.app, adminToken)
         .post("/api/boards")
-        .send({ name: "Admin only board" });
+        .send({ name: "Admin only board", allowedUsers: [] });
 
       const response = await withAuth(context.app, adminToken).get(
         "/api/my/boards",
@@ -76,7 +95,7 @@ describe("my-boards API", () => {
     it("returns 403 for boards the user cannot access", async () => {
       const privateBoardResponse = await withAuth(context.app, adminToken)
         .post("/api/boards")
-        .send({ name: "Private board" });
+        .send({ name: "Private board", allowedUsers: [] });
       const privateBoardId = privateBoardResponse.body.board.id as string;
 
       const response = await withAuth(context.app, userToken).get(
@@ -163,7 +182,7 @@ describe("my-boards API", () => {
     it("returns 403 when modifying items on an inaccessible board", async () => {
       const privateBoardResponse = await withAuth(context.app, adminToken)
         .post("/api/boards")
-        .send({ name: "Private board" });
+        .send({ name: "Private board", allowedUsers: [] });
       const privateBoardId = privateBoardResponse.body.board.id as string;
 
       const createItemResponse = await withAuth(context.app, adminToken)

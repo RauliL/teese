@@ -72,7 +72,7 @@ describe("initialize", () => {
       });
       expect(result.board.name).toBe("First board");
       expect(result.board.items).toEqual([]);
-      expect(result.board.allowedUsers).toEqual([]);
+      expect(result.board.allowedUsers).toEqual(["*"]);
     });
 
     it("refuses to run when users already exist", async () => {

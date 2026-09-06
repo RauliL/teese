@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { isValidSlug } from "is-valid-slug";
 import type { Board, CreateUserRequest, PublicUser, User } from "../types.js";
+import { OPEN_FOR_EVERYONE_USERNAME } from "../types.js";
 import { BOARDS_NAMESPACE } from "./boards.js";
 import { storage, USERS_NAMESPACE } from "./storage.js";
 
@@ -87,7 +88,10 @@ async function removeUserFromBoardAccessLists(
   for await (const [id, board] of storage.entries<Board>(BOARDS_NAMESPACE)) {
     const allowedUsers = board.allowedUsers ?? [];
 
-    if (!allowedUsers.includes(username)) {
+    if (
+      allowedUsers.includes(OPEN_FOR_EVERYONE_USERNAME) ||
+      !allowedUsers.includes(username)
+    ) {
       continue;
     }
 

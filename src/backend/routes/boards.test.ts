@@ -28,6 +28,10 @@ describe("boards API", () => {
         .post("/api/boards")
         .send({ name: "Sprint board", allowedUsers: ["alice"] });
 
+      const openBoardResponse = await withAuth(context.app, adminToken)
+        .post("/api/boards")
+        .send({ name: "Open board" });
+
       const response = await withAuth(context.app, adminToken).get(
         "/api/boards",
       );
@@ -35,18 +39,41 @@ describe("boards API", () => {
       expect(response.status).toBe(200);
       expect(response.body.boards).toEqual([
         {
+          id: openBoardResponse.body.board.id,
+          name: "Open board",
+          createdAt: openBoardResponse.body.board.createdAt,
+          itemCount: 0,
+          allowedUserCount: 0,
+          openForEveryone: true,
+        },
+        {
           id: createResponse.body.board.id,
           name: "Sprint board",
           createdAt: createResponse.body.board.createdAt,
           itemCount: 0,
           allowedUserCount: 1,
+          openForEveryone: false,
         },
       ]);
     });
   });
 
   describe("POST /api/boards", () => {
-    it("creates a board", async () => {
+    it("creates a board open for everyone by default", async () => {
+      const response = await withAuth(context.app, adminToken)
+        .post("/api/boards")
+        .send({ name: "Roadmap" });
+
+      expect(response.status).toBe(201);
+      expect(response.body.board).toMatchObject({
+        name: "Roadmap",
+        allowedUsers: ["*"],
+        items: [],
+      });
+      expect(response.body.board.id).toEqual(expect.any(String));
+    });
+
+    it("creates a board with selected users", async () => {
       const response = await withAuth(context.app, adminToken)
         .post("/api/boards")
         .send({ name: "Roadmap", allowedUsers: ["alice"] });
@@ -76,6 +103,17 @@ describe("boards API", () => {
 
       expect(response.status).toBe(400);
       expect(response.body.error).toBe('User "missing-user" does not exist.');
+    });
+
+    it("returns 400 when open for everyone is combined with usernames", async () => {
+      const response = await withAuth(context.app, adminToken)
+        .post("/api/boards")
+        .send({ name: "Roadmap", allowedUsers: ["*", "alice"] });
+
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe(
+        "Open for everyone cannot be combined with specific usernames.",
+      );
     });
   });
 

@@ -9,6 +9,7 @@ import type {
   UpdateBoardRequest,
   UpdateItemRequest,
 } from "../types.js";
+import { OPEN_FOR_EVERYONE_USERNAME } from "../types.js";
 import { ItemStatus } from "../types.js";
 import { storage } from "./storage.js";
 import { getUser } from "./users.js";
@@ -128,13 +129,27 @@ function normalizeBoard(board: Board): Board {
   };
 }
 
+function isOpenForEveryoneEntry(value: string): boolean {
+  return value === OPEN_FOR_EVERYONE_USERNAME;
+}
+
+export function isBoardOpenForEveryone(board: Board): boolean {
+  return normalizeBoard(board).allowedUsers.includes(
+    OPEN_FOR_EVERYONE_USERNAME,
+  );
+}
+
 async function validateAllowedUsers(value: unknown): Promise<string[]> {
   if (value === undefined) {
-    return [];
+    return [OPEN_FOR_EVERYONE_USERNAME];
   }
 
   if (!Array.isArray(value)) {
     throw new BoardValidationError("Allowed users must be an array.");
+  }
+
+  if (value.length === 0) {
+    return [];
   }
 
   const allowedUsers: string[] = [];
@@ -150,11 +165,29 @@ async function validateAllowedUsers(value: unknown): Promise<string[]> {
       continue;
     }
 
+    if (isOpenForEveryoneEntry(username)) {
+      allowedUsers.push(username);
+      continue;
+    }
+
     if (!(await getUser(username))) {
       throw new BoardValidationError(`User "${username}" does not exist.`);
     }
 
     allowedUsers.push(username);
+  }
+
+  if (
+    allowedUsers.includes(OPEN_FOR_EVERYONE_USERNAME) &&
+    allowedUsers.length > 1
+  ) {
+    throw new BoardValidationError(
+      "Open for everyone cannot be combined with specific usernames.",
+    );
+  }
+
+  if (allowedUsers.includes(OPEN_FOR_EVERYONE_USERNAME)) {
+    return [OPEN_FOR_EVERYONE_USERNAME];
   }
 
   return allowedUsers.sort((a, b) => a.localeCompare(b));
@@ -169,7 +202,13 @@ export function userHasBoardAccess(
     return true;
   }
 
-  return normalizeBoard(board).allowedUsers.includes(username);
+  const allowedUsers = normalizeBoard(board).allowedUsers;
+
+  if (allowedUsers.includes(OPEN_FOR_EVERYONE_USERNAME)) {
+    return true;
+  }
+
+  return allowedUsers.includes(username);
 }
 
 async function getBoardOrThrow(id: string): Promise<Board> {
@@ -279,12 +318,16 @@ export async function listBoardSummaries(): Promise<BoardSummary[]> {
 
   for await (const [id, board] of storage.entries<Board>(BOARDS_NAMESPACE)) {
     const normalizedBoard = normalizeBoard(board);
+    const openForEveryone = isBoardOpenForEveryone(normalizedBoard);
     summaries.push({
       id,
       name: normalizedBoard.name,
       createdAt: normalizedBoard.createdAt,
       itemCount: normalizedBoard.items.length,
-      allowedUserCount: normalizedBoard.allowedUsers.length,
+      allowedUserCount: openForEveryone
+        ? 0
+        : normalizedBoard.allowedUsers.length,
+      openForEveryone,
     });
   }
 

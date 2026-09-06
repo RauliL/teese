@@ -1,6 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { OPEN_FOR_EVERYONE_USERNAME } from "../../types.js";
 import * as authApi from "../api/auth.js";
 import { ApiError } from "../api/client.js";
 import { renderWithProviders, screen } from "../test/render.js";
@@ -25,7 +26,19 @@ describe("BoardAllowedUsersField", () => {
     });
   });
 
-  it("loads users and renders the autocomplete field", async () => {
+  it("defaults to open for everyone", async () => {
+    renderWithProviders(
+      <BoardAllowedUsersField
+        value={[OPEN_FOR_EVERYONE_USERNAME]}
+        onChange={onChange}
+      />,
+    );
+
+    expect(await screen.findByLabelText("Everyone")).toBeChecked();
+    expect(screen.queryByLabelText("Allowed users")).not.toBeInTheDocument();
+  });
+
+  it("loads users and renders the selected users field", async () => {
     renderWithProviders(
       <BoardAllowedUsersField value={[]} onChange={onChange} />,
     );
@@ -56,6 +69,18 @@ describe("BoardAllowedUsersField", () => {
     await user.click(await screen.findByRole("option", { name: "bob" }));
 
     expect(onChange).toHaveBeenCalledWith(["bob"]);
+  });
+
+  it("calls onChange when switching to everyone", async () => {
+    const user = userEvent.setup();
+
+    renderWithProviders(
+      <BoardAllowedUsersField value={["alice"]} onChange={onChange} />,
+    );
+
+    await user.click(await screen.findByLabelText("Everyone"));
+
+    expect(onChange).toHaveBeenCalledWith([OPEN_FOR_EVERYONE_USERNAME]);
   });
 
   it("shows an error when loading users fails", async () => {

@@ -123,7 +123,11 @@ export const BoardsPage: FunctionComponent = () => {
                     </Button>
                   </TableCell>
                   <TableCell>{formatDateTime(board.createdAt)}</TableCell>
-                  <TableCell align="right">{board.allowedUserCount}</TableCell>
+                  <TableCell align="right">
+                    {board.openForEveryone
+                      ? t("board.accessEveryone")
+                      : board.allowedUserCount}
+                  </TableCell>
                   <TableCell align="right">{board.itemCount}</TableCell>
                   <TableCell align="right">
                     <Button

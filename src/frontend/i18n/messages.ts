@@ -76,6 +76,13 @@ const rawMessages = defineMessages({
   "item.notFound": { defaultMessage: "Item not found." },
 
   "board.name": { defaultMessage: "Board name" },
+  "board.accessPolicy": { defaultMessage: "Access policy" },
+  "board.accessEveryone": { defaultMessage: "Everyone" },
+  "board.accessSelectedUsers": { defaultMessage: "Selected users" },
+  "board.accessEveryoneHelp": {
+    defaultMessage:
+      "All authenticated users can access this board in the kanban UI. Administrators always have access.",
+  },
   "board.allowedUsers": { defaultMessage: "Allowed users" },
   "board.allowedUsersHelp": {
     defaultMessage:

@@ -64,6 +64,8 @@ export type Item = {
   history: HistoryEntry[];
 };
 
+export const OPEN_FOR_EVERYONE_USERNAME = "*";
+
 export type Board = {
   id: string;
   name: string;
@@ -78,6 +80,7 @@ export type BoardSummary = {
   createdAt: string;
   itemCount: number;
   allowedUserCount: number;
+  openForEveryone: boolean;
 };
 
 export type CreateBoardRequest = {

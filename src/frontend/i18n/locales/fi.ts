@@ -59,6 +59,11 @@ export const fiMessages: Record<MessageKey, string> = {
   "item.notFound": "Korttia ei löytynyt.",
 
   "board.name": "Taulun nimi",
+  "board.accessPolicy": "Käyttöoikeudet",
+  "board.accessEveryone": "Kaikki",
+  "board.accessSelectedUsers": "Valitut käyttäjät",
+  "board.accessEveryoneHelp":
+    "Kaikki kirjautuneet käyttäjät voivat käyttää tätä taulua kanban-näkymässä. Ylläpitäjillä on aina pääsy.",
   "board.allowedUsers": "Sallitut käyttäjät",
   "board.allowedUsersHelp":
     "Vain valitut käyttäjät voivat käyttää tätä taulua kanban-näkymässä. Ylläpitäjillä on aina pääsy.",

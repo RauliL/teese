@@ -15,6 +15,7 @@ const mockBoardSummary: BoardSummary = {
   createdAt: "2026-01-01T00:00:00.000Z",
   itemCount: 2,
   allowedUserCount: 1,
+  openForEveryone: false,
 };
 
 const mockBoard: Board = {
