@@ -1,6 +1,6 @@
 {
   "name": "teese",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "description": "Minimal Kanban board Web application",
   "author": "Rauli Laine <rauli.laine@iki.fi>",
