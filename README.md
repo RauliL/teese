@@ -1,4 +1,11 @@
-# Teese
+# Teese [![github-url][github-image]][github-url] [![coveralls][coveralls-image]][coveralls-url] [![npm][npm-image]][npm-url]
+
+[github-image]: https://github.com/RauliL/teese/actions/workflows/build.yml/badge.svg
+[github-url]: https://github.com/RauliL/teese/actions/workflows/build.yml
+[coveralls-image]: https://coveralls.io/repos/github/RauliL/teese/badge.svg
+[coveralls-url]: https://coveralls.io/github/RauliL/teese
+[npm-image]: https://img.shields.io/npm/v/teese.svg
+[npm-url]: https://npmjs.org/package/teese
 
 Minimal [Kanban board] Web application. Uses [Varasto] as storage, while the UI
 has been implemented with [React] and [Material UI].
