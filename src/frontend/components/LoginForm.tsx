@@ -37,6 +37,7 @@ export const LoginForm: FunctionComponent = () => {
         id="username"
         name="username"
         label={t("auth.username")}
+        autoFocus
         autoComplete="username"
         value={username}
         onChange={(event) => setUsername(event.target.value)}
