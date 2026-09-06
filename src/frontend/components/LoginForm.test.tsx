@@ -30,8 +30,12 @@ describe("LoginForm", () => {
   it("renders username and password fields", () => {
     renderWithProviders(<LoginForm />);
 
-    expect(screen.getByRole("heading", { name: "Sign in" })).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: /^Username/ })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Sign in" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("textbox", { name: /^Username/ }),
+    ).toBeInTheDocument();
     expect(screen.getByLabelText(/^Password/)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
   });
@@ -42,7 +46,10 @@ describe("LoginForm", () => {
 
     renderWithProviders(<LoginForm />);
 
-    await user.type(screen.getByRole("textbox", { name: /^Username/ }), "alice");
+    await user.type(
+      screen.getByRole("textbox", { name: /^Username/ }),
+      "alice",
+    );
     await user.type(screen.getByLabelText(/^Password/), "secret");
     await user.click(screen.getByRole("button", { name: "Sign in" }));
 
@@ -82,7 +89,10 @@ describe("LoginForm", () => {
 
     renderWithProviders(<LoginForm />);
 
-    await user.type(screen.getByRole("textbox", { name: /^Username/ }), "alice");
+    await user.type(
+      screen.getByRole("textbox", { name: /^Username/ }),
+      "alice",
+    );
     await user.type(screen.getByLabelText(/^Password/), "secret");
     await user.click(screen.getByRole("button", { name: "Sign in" }));
 

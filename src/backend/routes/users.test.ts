@@ -25,7 +25,9 @@ describe("users API", () => {
     it("lists users for administrators", async () => {
       await seedRegularUser(context.createUser);
 
-      const response = await withAuth(context.app, adminToken).get("/api/users");
+      const response = await withAuth(context.app, adminToken).get(
+        "/api/users",
+      );
 
       expect(response.status).toBe(200);
       expect(response.body.users).toEqual([

@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import path from "node:path";
 import { requireAdmin, requireAuth } from "./middleware/auth.js";
 import authRouter from "./routes/auth.js";
 import boardsRouter from "./routes/boards.js";
@@ -15,6 +16,7 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 app.use(express.json());
+app.use(express.static(path.resolve(import.meta.dirname, "..", "public")));
 
 await bootstrapAdminIfNeeded();
 

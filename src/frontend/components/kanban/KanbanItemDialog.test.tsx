@@ -60,7 +60,9 @@ describe("KanbanItemDialog", () => {
       />,
     );
 
-    expect(screen.getByRole("dialog", { name: "Item details" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("dialog", { name: "Item details" }),
+    ).toBeInTheDocument();
     expect(screen.getByDisplayValue("Review PR")).toBeInTheDocument();
     expect(screen.getByText("alice commented")).toBeInTheDocument();
     expect(screen.getByText(/Looks good/)).toBeInTheDocument();

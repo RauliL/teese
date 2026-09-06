@@ -52,7 +52,11 @@ describe("KanbanBoard", () => {
     const board = mockBoard({ items: [] });
     const updatedBoard = mockBoard({
       items: [
-        mockItem({ id: "item-new", title: "New task", status: ItemStatus.ToDo }),
+        mockItem({
+          id: "item-new",
+          title: "New task",
+          status: ItemStatus.ToDo,
+        }),
       ],
     });
     mockCreateItem.mockResolvedValue({ board: updatedBoard });

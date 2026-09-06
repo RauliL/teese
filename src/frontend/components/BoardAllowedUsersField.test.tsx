@@ -48,7 +48,9 @@ describe("BoardAllowedUsersField", () => {
       <BoardAllowedUsersField value={[]} onChange={onChange} />,
     );
 
-    const input = await screen.findByRole("combobox", { name: /Allowed users/i });
+    const input = await screen.findByRole("combobox", {
+      name: /Allowed users/i,
+    });
     await user.click(input);
     await user.click(await screen.findByRole("option", { name: "bob" }));
 
@@ -72,8 +74,8 @@ describe("BoardAllowedUsersField", () => {
 
     await screen.findByRole("combobox", { name: /Allowed users/i });
 
-    expect(screen.getByRole("combobox", { name: /Allowed users/i })).toHaveAttribute(
-      "disabled",
-    );
+    expect(
+      screen.getByRole("combobox", { name: /Allowed users/i }),
+    ).toHaveAttribute("disabled");
   });
 });
