@@ -10,7 +10,7 @@ const reactFiles = ["src/**/*.{jsx,tsx}"];
 
 export default defineConfig([
   {
-    ignores: ["dist/**", "node_modules/**"],
+    ignores: ["dist/**", "node_modules/**", "coverage/**"],
   },
   {
     files: srcFiles,

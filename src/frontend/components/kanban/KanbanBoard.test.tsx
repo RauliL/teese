@@ -1,4 +1,5 @@
 import userEvent from "@testing-library/user-event";
+import React from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ItemStatus } from "../../../types.js";
 import * as myBoardsApi from "../../api/myBoards.js";

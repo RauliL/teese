@@ -1,4 +1,5 @@
 import userEvent from "@testing-library/user-event";
+import React from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as authApi from "../api/auth.js";
 import { ApiError } from "../api/client.js";
