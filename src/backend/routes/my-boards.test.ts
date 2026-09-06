@@ -84,7 +84,9 @@ describe("my-boards API", () => {
       );
 
       expect(response.status).toBe(403);
-      expect(response.body.error).toBe("You do not have access to this board.");
+      expect(response.body.error).toBe(
+        "You do not have access to this board.",
+      );
     });
   });
 
@@ -174,7 +176,9 @@ describe("my-boards API", () => {
         .send({ title: "Blocked" });
 
       expect(response.status).toBe(403);
-      expect(response.body.error).toBe("You do not have access to this board.");
+      expect(response.body.error).toBe(
+        "You do not have access to this board.",
+      );
     });
 
     it("returns 401 without authentication", async () => {

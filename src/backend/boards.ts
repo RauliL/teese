@@ -296,7 +296,9 @@ export async function getBoard(id: string): Promise<Board | undefined> {
   return board ? normalizeBoard(board) : undefined;
 }
 
-export async function createBoard(request: CreateBoardRequest): Promise<Board> {
+export async function createBoard(
+  request: CreateBoardRequest,
+): Promise<Board> {
   const name = validateBoardName(request.name);
   const allowedUsers = await validateAllowedUsers(request.allowedUsers);
   const id = randomUUID();

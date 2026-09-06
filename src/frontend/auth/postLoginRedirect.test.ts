@@ -28,7 +28,9 @@ describe("postLoginRedirect", () => {
   });
 
   it("uses fallback when nothing is stored", () => {
-    expect(resolvePostLoginRedirect("/boards/board-2")).toBe("/boards/board-2");
+    expect(resolvePostLoginRedirect("/boards/board-2")).toBe(
+      "/boards/board-2",
+    );
   });
 
   it("defaults to home for invalid paths", () => {

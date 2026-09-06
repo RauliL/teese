@@ -81,7 +81,9 @@ async function countAdminUsers(): Promise<number> {
   return count;
 }
 
-async function removeUserFromBoardAccessLists(username: string): Promise<void> {
+async function removeUserFromBoardAccessLists(
+  username: string,
+): Promise<void> {
   for await (const [id, board] of storage.entries<Board>(BOARDS_NAMESPACE)) {
     const allowedUsers = board.allowedUsers ?? [];
 

@@ -180,9 +180,10 @@ describe("boards API", () => {
         ]),
       );
 
-      const deleteItemResponse = await withAuth(context.app, adminToken).delete(
-        `/api/boards/${boardId}/items/${itemId}`,
-      );
+      const deleteItemResponse = await withAuth(
+        context.app,
+        adminToken,
+      ).delete(`/api/boards/${boardId}/items/${itemId}`);
 
       expect(deleteItemResponse.status).toBe(200);
       expect(deleteItemResponse.body.board.items).toEqual([]);

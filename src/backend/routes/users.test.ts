@@ -39,7 +39,9 @@ describe("users API", () => {
       await seedRegularUser(context.createUser);
       const userToken = await login(context.app, "alice", "password123");
 
-      const response = await withAuth(context.app, userToken).get("/api/users");
+      const response = await withAuth(context.app, userToken).get(
+        "/api/users",
+      );
 
       expect(response.status).toBe(403);
       expect(response.body.error).toBe("Administrator access required.");
