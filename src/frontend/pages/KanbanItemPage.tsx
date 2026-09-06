@@ -20,7 +20,7 @@ import React, {
   useState,
 } from "react";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
-import type { Board, Item, ItemStatus } from "../../types.js";
+import type { Board, ItemStatus } from "../../types.js";
 import { ITEM_STATUSES } from "../../types.js";
 import * as myBoardsApi from "../api/myBoards.js";
 import { ApiError } from "../api/client.js";
