@@ -1,4 +1,6 @@
+import { getUser } from "express-varasto-jwt-auth";
 import { randomUUID } from "node:crypto";
+
 import type {
   Board,
   BoardSummary,
@@ -12,7 +14,6 @@ import type {
 import { OPEN_FOR_EVERYONE_USERNAME } from "../types.js";
 import { ItemStatus } from "../types.js";
 import { storage } from "./storage.js";
-import { getUser } from "./users.js";
 
 export const BOARDS_NAMESPACE = "boards";
 
@@ -170,7 +171,7 @@ async function validateAllowedUsers(value: unknown): Promise<string[]> {
       continue;
     }
 
-    if (!(await getUser(username))) {
+    if (!(await getUser(storage, username))) {
       throw new BoardValidationError(`User "${username}" does not exist.`);
     }
 

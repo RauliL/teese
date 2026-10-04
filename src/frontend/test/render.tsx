@@ -6,11 +6,9 @@ function AllProviders({ children }: { children: ReactNode }) {
   return <AppIntlProvider>{children}</AppIntlProvider>;
 }
 
-export function renderWithProviders(
+export const renderWithProviders = (
   ui: ReactElement,
   options?: Omit<RenderOptions, "wrapper">,
-) {
-  return render(ui, { wrapper: AllProviders, ...options });
-}
+) => render(ui, { wrapper: AllProviders, ...options });
 
 export * from "@testing-library/react";

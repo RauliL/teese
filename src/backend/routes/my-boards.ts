@@ -1,4 +1,5 @@
 import { Router } from "express";
+import type { AuthenticatedRequest } from "express-varasto-jwt-auth";
 import type {
   CreateCommentRequest,
   CreateItemRequest,
@@ -17,7 +18,6 @@ import {
   listAccessibleBoards,
   updateItemWithAccess,
 } from "../boards.js";
-import type { AuthenticatedRequest } from "../middleware/auth.js";
 
 const router = Router();
 

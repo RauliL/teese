@@ -1,6 +1,13 @@
+import {
+  PublicUser,
+  addUser,
+  hasUsers,
+  isValidUsername,
+} from "express-varasto-jwt-auth";
+
+import { Board } from "../types.js";
 import { createBoard } from "./boards.js";
-import { createUser, hasUsers, isValidUsername } from "./users.js";
-import type { Board, PublicUser } from "../types.js";
+import { storage } from "./storage.js";
 
 export type InitializeOptions = {
   username: string;
@@ -51,18 +58,19 @@ export function validateInitializeInput(
 export async function initializeApplication(
   options: InitializeOptions,
 ): Promise<InitializeResult> {
-  if (await hasUsers()) {
+  if (await hasUsers(storage)) {
     throw new InitializeError(
       "Teese is already initialized. Users already exist.",
     );
   }
 
   const validated = validateInitializeInput(options);
-  const user = await createUser({
-    username: validated.username,
-    password: validated.password,
-    isAdmin: true,
-  });
+  const user = await addUser(
+    storage,
+    validated.username,
+    validated.password,
+    true,
+  );
   const board = await createBoard({ name: validated.boardName });
 
   return { user, board };

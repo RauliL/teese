@@ -1,10 +1,14 @@
+import {
+  UserValidationError,
+  isValidUsername,
+} from "express-varasto-jwt-auth";
 import prompts from "prompts";
+
 import {
   initializeApplication,
   InitializeError,
   validateInitializeInput,
 } from "../backend/initialize.js";
-import { isValidUsername, UserValidationError } from "../backend/users.js";
 import { BoardValidationError } from "../backend/boards.js";
 
 async function promptForInitializeOptions() {

@@ -1,6 +1,8 @@
 // @vitest-environment node
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { addUser } from "express-varasto-jwt-auth";
+
 import { InitializeError, validateInitializeInput } from "./initialize.js";
 
 describe("initialize", () => {
@@ -76,15 +78,10 @@ describe("initialize", () => {
     });
 
     it("refuses to run when users already exist", async () => {
-      const { createUser } = await import("./users.js");
-      const { initializeApplication: initialize } =
-        await import("./initialize.js");
+      const [{ initializeApplication: initialize }, { storage }] =
+        await Promise.all([import("./initialize.js"), import("./storage.js")]);
 
-      await createUser({
-        username: "existing",
-        password: "password123",
-        isAdmin: true,
-      });
+      await addUser(storage, "existing", "password123", true);
 
       await expect(
         initialize({

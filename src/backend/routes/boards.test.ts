@@ -17,8 +17,8 @@ describe("boards API", () => {
 
   beforeEach(async () => {
     context = await setupBackendTest();
-    await seedAdmin(context.createUser);
-    await seedRegularUser(context.createUser);
+    await seedAdmin(context.addUser);
+    await seedRegularUser(context.addUser);
     adminToken = await login(context.app, "admin", "password123");
   });
 

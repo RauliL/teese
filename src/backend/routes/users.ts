@@ -1,36 +1,34 @@
 import { Router } from "express";
-import type { CreateUserRequest } from "../../types.js";
-import type { AuthenticatedRequest } from "../middleware/auth.js";
 import {
-  createUser,
-  deleteUser,
-  listUsers,
+  AuthenticatedRequest,
   UserNotFoundError,
   UserValidationError,
-} from "../users.js";
+  addUser,
+  deleteUser,
+  listUsers,
+} from "express-varasto-jwt-auth";
+
+import { storage } from "../storage.js";
+import { removeUserFromBoardAccessLists } from "../users.js";
 
 const router = Router();
 
 router.get("/", async (_req, res) => {
-  const users = await listUsers();
-  res.json({ users });
+  res.json({ users: await listUsers(storage) });
 });
 
 router.post("/", async (req, res) => {
-  const body = req.body as Partial<CreateUserRequest>;
+  const { username, password, isAdmin } = req.body;
 
-  if (!body.username || !body.password) {
+  if (!username || !password) {
     res.status(400).json({ error: "Username and password are required." });
     return;
   }
 
   try {
-    const user = await createUser({
-      username: body.username,
-      password: body.password,
-      isAdmin: body.isAdmin ?? false,
+    res.status(201).json({
+      user: await addUser(storage, username, password, isAdmin ?? false),
     });
-    res.status(201).json({ user });
   } catch (error) {
     if (error instanceof UserValidationError) {
       res.status(400).json({ error: error.message });
@@ -51,7 +49,8 @@ router.delete("/:username", async (req, res) => {
   }
 
   try {
-    await deleteUser(targetUsername);
+    await deleteUser(storage, targetUsername);
+    await removeUserFromBoardAccessLists(targetUsername);
     res.status(204).send();
   } catch (error) {
     if (error instanceof UserValidationError) {

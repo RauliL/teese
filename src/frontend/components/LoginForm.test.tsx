@@ -63,6 +63,34 @@ describe("LoginForm", () => {
     });
   });
 
+  it("submits autofilled credentials that never fired onChange", async () => {
+    login.mockResolvedValue(undefined);
+
+    const { container } = renderWithProviders(<LoginForm />);
+    const form = container.querySelector("form");
+    expect(form).not.toBeNull();
+
+    const username = screen.getByRole("textbox", {
+      name: /^Username/,
+    }) as HTMLInputElement;
+    const password = screen.getByLabelText(/^Password/) as HTMLInputElement;
+
+    // Simulate password-manager autofill: DOM values change without React events.
+    username.value = "alice";
+    password.value = "secret";
+
+    form!.dispatchEvent(
+      new Event("submit", { bubbles: true, cancelable: true }),
+    );
+
+    await waitFor(() => {
+      expect(login).toHaveBeenCalledWith({
+        username: "alice",
+        password: "secret",
+      });
+    });
+  });
+
   it("shows an error message from auth context", () => {
     mockUseAuth.mockReturnValue({
       user: null,

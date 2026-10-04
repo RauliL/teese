@@ -1,11 +1,15 @@
 import type { Express } from "express";
+import { PublicUser, addUser } from "express-varasto-jwt-auth";
 import request from "supertest";
 import { vi } from "vitest";
-import type { PublicUser } from "../../types.js";
 
 export type TestContext = {
   app: Express;
-  createUser: typeof import("../users.js").createUser;
+  addUser: (
+    username: string,
+    password: string,
+    isAdmin?: boolean,
+  ) => Promise<PublicUser>;
 };
 
 export async function setupBackendTest(): Promise<TestContext> {
@@ -13,12 +17,16 @@ export async function setupBackendTest(): Promise<TestContext> {
 
   process.env.NODE_ENV = "test";
 
-  const [{ default: app }, { createUser }] = await Promise.all([
+  const [{ default: app }, { storage }] = await Promise.all([
     import("../index.js"),
-    import("../users.js"),
+    import("../storage.js"),
   ]);
 
-  return { app, createUser };
+  return {
+    app,
+    addUser: (username, password, isAdmin = false) =>
+      addUser(storage, username, password, isAdmin),
+  };
 }
 
 export async function login(
@@ -53,24 +61,16 @@ export function withAuth(app: Express, token: string) {
 }
 
 export async function seedAdmin(
-  createUser: TestContext["createUser"],
+  addUserFn: TestContext["addUser"],
 ): Promise<PublicUser> {
-  return createUser({
-    username: "admin",
-    password: "password123",
-    isAdmin: true,
-  });
+  return addUserFn("admin", "password123", true);
 }
 
 export async function seedRegularUser(
-  createUser: TestContext["createUser"],
+  addUserFn: TestContext["addUser"],
   username = "alice",
 ): Promise<PublicUser> {
-  return createUser({
-    username,
-    password: "password123",
-    isAdmin: false,
-  });
+  return addUserFn(username, "password123", false);
 }
 
 export { request };

@@ -10,14 +10,17 @@ import { useMessages } from "../i18n/useMessages.js";
 export const LoginForm: FunctionComponent = () => {
   const { login, error, clearError } = useAuth();
   const { t } = useMessages();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     clearError();
     setSubmitting(true);
+
+    // Uncontrolled fields + FormData so browser autofill is included on submit.
+    const formData = new FormData(event.currentTarget);
+    const username = String(formData.get("username") ?? "");
+    const password = String(formData.get("password") ?? "");
 
     try {
       await login({ username, password });
@@ -39,8 +42,6 @@ export const LoginForm: FunctionComponent = () => {
         label={t("auth.username")}
         autoFocus
         autoComplete="username"
-        value={username}
-        onChange={(event) => setUsername(event.target.value)}
         margin="normal"
         required
         fullWidth
@@ -51,8 +52,6 @@ export const LoginForm: FunctionComponent = () => {
         label={t("auth.password")}
         type="password"
         autoComplete="current-password"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
         margin="normal"
         required
         fullWidth

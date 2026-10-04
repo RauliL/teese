@@ -16,13 +16,13 @@ describe("users API", () => {
 
   beforeEach(async () => {
     context = await setupBackendTest();
-    await seedAdmin(context.createUser);
+    await seedAdmin(context.addUser);
     adminToken = await login(context.app, "admin", "password123");
   });
 
   describe("GET /api/users", () => {
     it("lists users for administrators", async () => {
-      await seedRegularUser(context.createUser);
+      await seedRegularUser(context.addUser);
 
       const response = await withAuth(context.app, adminToken).get(
         "/api/users",
@@ -36,7 +36,7 @@ describe("users API", () => {
     });
 
     it("returns 403 for non-administrators", async () => {
-      await seedRegularUser(context.createUser);
+      await seedRegularUser(context.addUser);
       const userToken = await login(context.app, "alice", "password123");
 
       const response = await withAuth(context.app, userToken).get(
@@ -97,7 +97,7 @@ describe("users API", () => {
 
   describe("DELETE /api/users/:username", () => {
     it("deletes another user", async () => {
-      await seedRegularUser(context.createUser);
+      await seedRegularUser(context.addUser);
 
       const response = await withAuth(context.app, adminToken).delete(
         "/api/users/alice",
