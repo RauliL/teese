@@ -4,12 +4,12 @@ import {
 } from "express-varasto-jwt-auth";
 import prompts from "prompts";
 
+import { BoardValidationError } from "../backend/boards.js";
 import {
-  initializeApplication,
   InitializeError,
+  initializeApplication,
   validateInitializeInput,
 } from "../backend/initialize.js";
-import { BoardValidationError } from "../backend/boards.js";
 
 async function promptForInitializeOptions() {
   let adminPassword = "";

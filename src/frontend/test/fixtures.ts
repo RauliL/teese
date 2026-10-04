@@ -1,4 +1,4 @@
-import { ItemStatus, type Board, type Item } from "../../types.js";
+import { type Board, type Item, ItemStatus } from "../../types.js";
 
 export const mockItem = (overrides: Partial<Item> = {}): Item => ({
   id: "item-1",

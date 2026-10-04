@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { ItemStatus, type Board } from "../../types.js";
+
+import { type Board, ItemStatus } from "../../types.js";
 import {
   addItemComment,
   createItem,

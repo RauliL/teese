@@ -1,10 +1,11 @@
 import { useCallback } from "react";
-import { useIntl, type MessageDescriptor } from "react-intl";
+import { type MessageDescriptor, useIntl } from "react-intl";
+
 import type { ItemStatus } from "../../types.js";
 import {
+  type MessageKey,
   itemStatusMessageKeys,
   messages,
-  type MessageKey,
 } from "./messages.js";
 
 type MessageValues = Record<

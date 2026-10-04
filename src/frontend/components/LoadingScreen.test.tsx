@@ -1,7 +1,8 @@
 import React from "react";
 import { describe, expect, it } from "vitest";
-import { LoadingScreen } from "./LoadingScreen.js";
+
 import { renderWithProviders, screen } from "../test/render.js";
+import { LoadingScreen } from "./LoadingScreen.js";
 
 describe("LoadingScreen", () => {
   it("shows the default loading message", () => {

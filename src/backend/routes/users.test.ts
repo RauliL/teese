@@ -1,13 +1,13 @@
 // @vitest-environment node
-
 import { beforeEach, describe, expect, it } from "vitest";
+
 import {
+  type TestContext,
   login,
   seedAdmin,
   seedRegularUser,
   setupBackendTest,
   withAuth,
-  type TestContext,
 } from "../test/helpers.js";
 
 describe("users API", () => {

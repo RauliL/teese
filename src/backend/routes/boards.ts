@@ -1,5 +1,6 @@
 import { Router } from "express";
 import type { AuthenticatedRequest } from "express-varasto-jwt-auth";
+
 import type {
   CreateBoardRequest,
   CreateCommentRequest,
@@ -8,15 +9,15 @@ import type {
   UpdateItemRequest,
 } from "../../types.js";
 import {
-  addItemComment,
   BoardNotFoundError,
   BoardValidationError,
+  ItemNotFoundError,
+  addItemComment,
   createBoard,
   createItem,
   deleteBoard,
   deleteItem,
   getBoard,
-  ItemNotFoundError,
   listBoardSummaries,
   updateBoard,
   updateItem,

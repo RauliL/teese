@@ -1,4 +1,4 @@
-import { OPEN_FOR_EVERYONE_USERNAME, Board } from "../types.js";
+import { Board, OPEN_FOR_EVERYONE_USERNAME } from "../types.js";
 import { BOARDS_NAMESPACE } from "./boards.js";
 import { storage } from "./storage.js";
 

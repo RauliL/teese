@@ -1,4 +1,5 @@
-import { defineMessages, type MessageDescriptor } from "react-intl";
+import { type MessageDescriptor, defineMessages } from "react-intl";
+
 import { ItemStatus } from "../../types.js";
 import { fiMessages } from "./locales/fi.js";
 import { idMessages } from "./locales/id.js";

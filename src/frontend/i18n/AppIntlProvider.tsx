@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactNode, useMemo } from "react";
 import { IntlProvider } from "react-intl";
+
 import { getAppLocale } from "./locale.js";
 import { getMessagesForLocale } from "./messages.js";
 

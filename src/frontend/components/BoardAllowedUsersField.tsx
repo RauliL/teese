@@ -7,6 +7,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { FunctionComponent, useEffect, useState } from "react";
+
 import type { PublicUser } from "../../types.js";
 import { OPEN_FOR_EVERYONE_USERNAME } from "../../types.js";
 import * as authApi from "../api/auth.js";

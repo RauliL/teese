@@ -1,8 +1,8 @@
 import {
   DragDropContext,
   Draggable,
-  Droppable,
   type DropResult,
+  Droppable,
 } from "@hello-pangea/dnd";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -14,10 +14,11 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { FormEvent, FunctionComponent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import type { Board, Item, ItemStatus } from "../../../types.js";
 import { ITEM_STATUSES, ItemStatus as ItemStatusEnum } from "../../../types.js";
-import * as myBoardsApi from "../../api/myBoards.js";
 import { ApiError } from "../../api/client.js";
+import * as myBoardsApi from "../../api/myBoards.js";
 import { useMessages } from "../../i18n/useMessages.js";
 
 type KanbanBoardProps = {

@@ -1,7 +1,6 @@
 // @vitest-environment node
-
-import { beforeEach, describe, expect, it, vi } from "vitest";
 import { addUser } from "express-varasto-jwt-auth";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { InitializeError, validateInitializeInput } from "./initialize.js";
 

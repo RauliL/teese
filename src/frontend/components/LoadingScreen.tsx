@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import React, { FunctionComponent } from "react";
+
 import { useMessages } from "../i18n/useMessages.js";
 
 type LoadingScreenProps = {

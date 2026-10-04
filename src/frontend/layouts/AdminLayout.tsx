@@ -18,15 +18,16 @@ import Typography from "@mui/material/Typography";
 import React, { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import {
-  Link as RouterLink,
   Outlet,
+  Link as RouterLink,
   useLocation,
   useNavigate,
 } from "react-router-dom";
+
 import { useAuth } from "../context/AuthContext.js";
 import { messages } from "../i18n/messages.js";
-import { useMessages } from "../i18n/useMessages.js";
 import type { MessageKey } from "../i18n/messages.js";
+import { useMessages } from "../i18n/useMessages.js";
 
 const drawerWidth = 240;
 

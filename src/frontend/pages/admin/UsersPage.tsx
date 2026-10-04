@@ -15,6 +15,7 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
+
 import type { PublicUser } from "../../../types.js";
 import * as authApi from "../../api/auth.js";
 import { ApiError } from "../../api/client.js";

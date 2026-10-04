@@ -7,9 +7,10 @@ import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
 import type { Board } from "../../types.js";
-import * as myBoardsApi from "../api/myBoards.js";
 import { ApiError } from "../api/client.js";
+import * as myBoardsApi from "../api/myBoards.js";
 import { KanbanBoard } from "../components/kanban/KanbanBoard.js";
 import { useMessages } from "../i18n/useMessages.js";
 import { AppLayout } from "../layouts/AppLayout.js";

@@ -2,12 +2,13 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ItemStatus } from "../../types.js";
-import * as myBoardsApi from "../api/myBoards.js";
 import { ApiError } from "../api/client.js";
-import { KanbanItemPage } from "./KanbanItemPage.js";
+import * as myBoardsApi from "../api/myBoards.js";
 import { mockBoard, mockItem } from "../test/fixtures.js";
 import { renderWithProviders, screen, waitFor } from "../test/render.js";
+import { KanbanItemPage } from "./KanbanItemPage.js";
 
 vi.mock("../layouts/AppLayout.js", () => ({
   AppLayout: ({ children }: { children: React.ReactNode }) => (

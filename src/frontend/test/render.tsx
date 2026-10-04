@@ -1,5 +1,6 @@
-import { render, type RenderOptions } from "@testing-library/react";
+import { type RenderOptions, render } from "@testing-library/react";
 import React, { type ReactElement, type ReactNode } from "react";
+
 import { AppIntlProvider } from "../i18n/AppIntlProvider.js";
 
 function AllProviders({ children }: { children: ReactNode }) {

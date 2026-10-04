@@ -1,7 +1,8 @@
-import app from "./app.js";
+import { normalizePort } from "@fvilers/normalize-port";
 import express from "express";
 import path from "node:path";
-import { normalizePort } from "@fvilers/normalize-port";
+
+import app from "./app.js";
 
 const clientDir = path.join(import.meta.dirname, "client");
 
