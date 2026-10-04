@@ -108,3 +108,9 @@ npm start
 When installed from npm, `npm start` runs the prebuilt server directly.
 
 The server listens on port `3000` unless you override it with `PORT`.
+
+## Attributions
+
+Icon by [Pexelpy] on [freeicons.io](https://freeicons.io)
+
+[Pexelpy]: https://freeicons.io/profile/433683
