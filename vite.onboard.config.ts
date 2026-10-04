@@ -2,12 +2,12 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   build: {
-    ssr: "src/scripts/init.ts",
+    ssr: "src/scripts/onboard.ts",
     outDir: "dist",
     emptyOutDir: false,
     rollupOptions: {
       output: {
-        entryFileNames: "init.js",
+        entryFileNames: "onboard.js",
       },
     },
   },

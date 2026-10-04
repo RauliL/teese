@@ -55,10 +55,10 @@ Teese stores users and boards as JSON files under `./data` by default. On a fres
 install there are no accounts yet, so run the interactive setup script:
 
 ```bash
-npm run init
+npm run onboard
 ```
 
-With Yarn, use `yarn run init` or `yarn initialize` (bare `yarn init` is Yarn's own command).
+With Yarn, use `yarn onboard`.
 
 You will be prompted for:
 
@@ -83,7 +83,7 @@ Recommended for any real deployment:
 ### Development
 
 ```bash
-npm run init
+npm run onboard
 npm run start:dev
 ```
 
@@ -97,10 +97,10 @@ credentials, then:
 
 ### Production
 
-From a source checkout, initialize and build first:
+From a source checkout, onboard and build first:
 
 ```bash
-npm run init
+npm run onboard
 npm run build
 npm start
 ```

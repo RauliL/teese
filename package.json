@@ -22,17 +22,16 @@
   },
   "files": [
     "dist",
-    "scripts/init.mjs",
+    "scripts/onboard.mjs",
     "README.md"
   ],
   "scripts": {
     "start": "node dist/index.js",
     "start:dev": "vite dev",
-    "init": "node scripts/init.mjs",
-    "initialize": "node scripts/init.mjs",
+    "onboard": "node scripts/onboard.mjs",
     "clean": "rimraf './dist'",
     "build": "vite build",
-    "postbuild": "cp src/server-entry.mjs dist/index.js && vite build --config vite.init.config.ts",
+    "postbuild": "cp src/server-entry.mjs dist/index.js && vite build --config vite.onboard.config.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint",

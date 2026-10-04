@@ -71,7 +71,7 @@ async function promptForInitializeOptions() {
     ],
     {
       onCancel: () => {
-        console.log("Initialization cancelled.");
+        console.log("Onboarding cancelled.");
         process.exit(0);
       },
     },
