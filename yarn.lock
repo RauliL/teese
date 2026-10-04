@@ -1106,6 +1106,14 @@
   dependencies:
     "@varasto/storage" "^6.0.0"
 
+"@varasto/multi-storage@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@varasto/multi-storage/-/multi-storage-6.0.0.tgz#c2f42319bf45f20f5c3b0550a73c43d2019972f1"
+  integrity sha512-7t0oOPy1xhD1qco4QmWXQC53JX5HWQMxwjKjUe1qEaB7XjZ07eXyyfoRiSkxxUjjYRPiQLz5rqQSX6GFznsmww==
+  dependencies:
+    "@varasto/storage" "^6.0.0"
+    picomatch "^4.0.7"
+
 "@varasto/storage@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@varasto/storage/-/storage-6.0.0.tgz#9752419dffc8682e0f728173a9bdf88bed915de7"

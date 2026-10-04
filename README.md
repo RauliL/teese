@@ -51,8 +51,9 @@ sources or a local build step to run the server.
 
 ## First use
 
-Teese stores users and boards as JSON files under `./data` by default. On a fresh
-install there are no accounts yet, so run the interactive setup script:
+Teese stores users and boards as JSON files under `./data` by default (set
+`TEESE_AUTH_DATA` to keep authentication data elsewhere). On a fresh install
+there are no accounts yet, so run the interactive setup script:
 
 ```bash
 npm run onboard
@@ -71,12 +72,17 @@ be run while no users exist yet.
 
 Recommended for any real deployment:
 
-| Variable         | Default                 | Purpose                                                          |
-| ---------------- | ----------------------- | ---------------------------------------------------------------- |
-| `JWT_SECRET`     | development placeholder | Secret used to sign authentication tokens                        |
-| `JWT_EXPIRES_IN` | `30d`                   | Token lifetime (passed to [jose](https://github.com/panva/jose)) |
-| `TEESE_DATA`     | `./data`                | Directory for Varasto JSON storage                               |
-| `PORT`           | `3000`                  | HTTP listen port                                                 |
+| Variable          | Default                 | Purpose                                                          |
+| ----------------- | ----------------------- | ---------------------------------------------------------------- |
+| `JWT_SECRET`      | development placeholder | Secret used to sign authentication tokens                        |
+| `JWT_EXPIRES_IN`  | `30d`                   | Token lifetime (passed to [jose](https://github.com/panva/jose)) |
+| `TEESE_DATA`      | `./data`                | Directory for Varasto JSON storage (boards and items)            |
+| `TEESE_AUTH_DATA` | _(unset)_               | Optional separate directory for authentication data (users)      |
+| `PORT`            | `3000`                  | HTTP listen port                                                 |
+
+By default, users and boards share `TEESE_DATA`. Set `TEESE_AUTH_DATA` to store
+authentication data in a different directory (for example a smaller volume or
+a more tightly restricted path).
 
 ## Usage
 
