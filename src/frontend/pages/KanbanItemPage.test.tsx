@@ -88,6 +88,36 @@ describe("KanbanItemPage", () => {
     expect(screen.getByText(/Looks good/)).toBeInTheDocument();
   });
 
+  it("linkifies URLs in comments", async () => {
+    mockGetMyBoard.mockResolvedValue({
+      board: mockBoard({
+        items: [
+          mockItem({
+            history: [
+              {
+                id: "history-1",
+                type: "comment",
+                createdAt: "2026-01-03T10:00:00.000Z",
+                username: "alice",
+                text: "See https://example.com/pr/1",
+              },
+            ],
+          }),
+        ],
+      }),
+    });
+
+    renderItemPage();
+
+    const link = await screen.findByRole("link", {
+      name: "https://example.com/pr/1",
+    });
+
+    expect(link).toHaveAttribute("href", "https://example.com/pr/1");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
   it("saves changes and returns to the board", async () => {
     const user = userEvent.setup();
     mockGetMyBoard.mockResolvedValue({

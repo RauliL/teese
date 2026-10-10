@@ -6,13 +6,13 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { FormEvent, FunctionComponent, useState } from "react";
+import { FormattedDate } from "react-intl";
 
 import type { Board } from "../../../types.js";
 import * as boardsApi from "../../api/boards.js";
 import { ApiError } from "../../api/client.js";
 import { BoardAllowedUsersField } from "../../components/BoardAllowedUsersField.js";
 import { useMessages } from "../../i18n/useMessages.js";
-import { formatDateTime } from "../../utils/formatDateTime.js";
 
 type BoardDetailViewProps = {
   board: Board;
@@ -70,7 +70,9 @@ export const BoardDetailView: FunctionComponent<BoardDetailViewProps> = ({
   return (
     <Paper sx={{ p: 3 }}>
       <Typography color="text.secondary" gutterBottom>
-        {t("board.created", { date: formatDateTime(board.createdAt) })}
+        {t("board.created", {
+          date: <FormattedDate value={board.createdAt} />,
+        })}
       </Typography>
       <Typography color="text.secondary" gutterBottom>
         {t("board.itemCount", { count: board.items.length })}

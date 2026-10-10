@@ -13,13 +13,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import React, { FunctionComponent, useEffect, useState } from "react";
+import { FormattedDate, FormattedTime } from "react-intl";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 import type { BoardSummary } from "../../../types.js";
 import * as boardsApi from "../../api/boards.js";
 import { ApiError } from "../../api/client.js";
 import { useMessages } from "../../i18n/useMessages.js";
-import { formatDateTime } from "../../utils/formatDateTime.js";
 
 export const BoardsPage: FunctionComponent = () => {
   const { t } = useMessages();
@@ -123,7 +123,10 @@ export const BoardsPage: FunctionComponent = () => {
                       {board.name}
                     </Button>
                   </TableCell>
-                  <TableCell>{formatDateTime(board.createdAt)}</TableCell>
+                  <TableCell>
+                    <FormattedDate value={board.createdAt} />{" "}
+                    <FormattedTime value={board.createdAt} />
+                  </TableCell>
                   <TableCell align="right">
                     {board.openForEveryone
                       ? t("board.accessEveryone")

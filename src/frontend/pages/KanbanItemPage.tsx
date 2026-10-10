@@ -25,10 +25,10 @@ import type { Board, ItemStatus } from "../../types.js";
 import { ITEM_STATUSES } from "../../types.js";
 import { ApiError } from "../api/client.js";
 import * as myBoardsApi from "../api/myBoards.js";
+import HistoryEntryContent from "../components/HistoryEntryContent.js";
 import { messages } from "../i18n/messages.js";
 import { useMessages } from "../i18n/useMessages.js";
 import { AppLayout } from "../layouts/AppLayout.js";
-import { formatDateTime } from "../utils/formatDateTime.js";
 
 export const KanbanItemPage: FunctionComponent = () => {
   const { t, itemStatusLabel, formatDescriptor } = useMessages();
@@ -258,11 +258,7 @@ export const KanbanItemPage: FunctionComponent = () => {
                               username: entry.username,
                             })
                       }
-                      secondary={
-                        entry.type === "comment"
-                          ? `${formatDateTime(entry.createdAt)} — ${entry.text}`
-                          : formatDateTime(entry.createdAt)
-                      }
+                      secondary={<HistoryEntryContent entry={entry} />}
                     />
                   </ListItem>
                 ))}
