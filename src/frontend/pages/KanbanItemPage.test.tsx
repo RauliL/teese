@@ -222,6 +222,42 @@ describe("KanbanItemPage", () => {
     });
   });
 
+  it("submits a comment when Control+Enter is pressed", async () => {
+    const user = userEvent.setup();
+    mockGetMyBoard.mockResolvedValue({
+      board: mockBoard({ items: [mockItem()] }),
+    });
+    mockAddItemComment.mockResolvedValue({
+      board: mockBoard({
+        items: [
+          mockItem({
+            history: [
+              {
+                id: "history-2",
+                type: "comment",
+                createdAt: "2026-01-04T12:00:00.000Z",
+                username: "alice",
+                text: "Ship it",
+              },
+            ],
+          }),
+        ],
+      }),
+    });
+
+    renderItemPage();
+
+    const commentFields = await screen.findAllByLabelText("Add comment");
+    await user.type(commentFields[0], "Ship it{Control>}{Enter}{/Control}");
+
+    await waitFor(() => {
+      expect(mockAddItemComment).toHaveBeenCalledWith("board-1", "item-1", {
+        text: "Ship it",
+      });
+      expect(screen.getByText(/Ship it/)).toBeInTheDocument();
+    });
+  });
+
   it("shows an error when saving fails", async () => {
     const user = userEvent.setup();
     mockGetMyBoard.mockResolvedValue({

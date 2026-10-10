@@ -269,6 +269,19 @@ export const KanbanItemPage: FunctionComponent = () => {
                 label={t("item.addComment")}
                 value={comment}
                 onChange={(event) => setComment(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key !== "Enter" || !event.ctrlKey) {
+                    return;
+                  }
+
+                  event.preventDefault();
+
+                  if (submitting || comment.trim().length === 0) {
+                    return;
+                  }
+
+                  event.currentTarget.closest("form")?.requestSubmit();
+                }}
                 fullWidth
                 multiline
                 minRows={2}
